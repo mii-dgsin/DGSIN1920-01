@@ -1,0 +1,23 @@
+{
+  "name": "dgsin1920-01",
+  "version": "0.1.0",
+  "description": "app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mii-dgsin/DGSIN-01.git"
+  },
+  "author": "José Antonio Gómez Romero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mii-dgsin/DGSIN-01/issues"
+  },
+  "homepage": "https://github.com/mii-dgsin/DGSIN-01#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
