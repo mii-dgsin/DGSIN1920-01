@@ -7,8 +7,8 @@ app.get("/hello", (req, res) => {
 
 app.use("/", express.static(path.join(__dirname, "public")));
 
-app.listen(process.env.PORT || 8080).on("error",(e)=>{
+app.listen(process.env.PORT || 8080, () => {
+    console.log("Server ready");
+}).on("error", (e) => {
     console.error("Server NOT ready!");
 });
-
-console.log("Server ready");
