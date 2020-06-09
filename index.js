@@ -46,7 +46,7 @@ MongoClient.connect(mdbURL, (err, client) => {
         console.error("DB connection error: " + err);
         process.exit(1);
     } else {
-        db = client.db("dgsin-xx-db").collection("collection");
+        db = client.db("dgsin1920-01-db").collection("collection");
         db.find({}).toArray((err, collection) => {
             if (err) {
                 console.error("Error getting data from DB: " + err);
