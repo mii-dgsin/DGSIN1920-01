@@ -46,7 +46,7 @@ MongoClient.connect(mdbURL, (err, client) => {
         console.error("DB connection error: " + err);
         process.exit(1);
     } else {
-        db = client.db("dgsin1920-01-db").collection("collection");
+        db = client.db("dgsin-xx-db").collection("collection");
         db.find({}).toArray((err, collection) => {
             if (err) {
                 console.error("Error getting data from DB: " + err);
@@ -62,9 +62,9 @@ MongoClient.connect(mdbURL, (err, client) => {
 
 // Get rid of _id when returning collection
 function formatCollection (collection) {
-    return collection.map((contact) => {
-        delete contact._id // removes the property
-        return contact;
+    return collection.map((collection) => {
+        delete collection._id // removes the property
+        return collection;
     });
 }
 
@@ -86,27 +86,27 @@ app.get(BASE_API + "/collection", (req, res) => {
 
 // POST over a collection
 app.post(BASE_API + "/collection", (req, res) => {
-    var newContact = req.body;
-    if (!newContact) {
-        console.warn("New POST request to /collection/ without contact, sending 400...");
+    var newCollection = req.body;
+    if (!newCollection) {
+        console.warn("New POST request to /collection/ without collection, sending 400...");
         res.sendStatus(400); //bad request
     } else {
-        console.info("New POST request to /collection with body: " + JSON.stringify(newContact, null, 2));
-        if (!newContact.name || !newContact.email || !newContact.phone) {
-            console.warn("The contact " + JSON.stringify(newContact, null, 2) + " is not well-formed, sending 422...");
+        console.info("New POST request to /collection with body: " + JSON.stringify(newCollection, null, 2));
+        if (!newCollection.name || !newCollection.email || !newCollection.phone) {
+            console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 422...");
             res.sendStatus(422); // unprocessable entity
         } else {
-            db.find({ "name": newContact.name }).toArray((err, collection) => {
+            db.find({ "name": newCollection.name }).toArray((err, collection) => {
                 if (err) {
                     console.error("Error getting data from DB: " + err);
                     res.sendStatus(500);
                 } else {
                     if (collection.length > 0) {
-                        console.warn("The contact " + JSON.stringify(newContact, null, 2) + " already exists, sending 409...");
+                        console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " already exists, sending 409...");
                         res.sendStatus(409); // conflict
                     } else {
-                        console.debug("Adding contact " + JSON.stringify(newContact, null, 2));
-                        db.insert(newContact);
+                        console.debug("Adding collection " + JSON.stringify(newCollection, null, 2));
+                        db.insert(newCollection);
                         res.sendStatus(201); // created
                     }
                 }
@@ -155,11 +155,11 @@ app.get(BASE_API + "/collection/:name", (req, res) => {
                 res.sendStatus(500); // internal server error
             } else {
                 if (filteredCollection.length > 0) {
-                    var contact = formatCollection(filteredCollection)[0]; //since we expect to have exactly ONE contact with this name
-                    console.debug("Sending contact: " + JSON.stringify(contact, null, 2));
-                    res.send(contact);
+                    var collection = formatCollection(filteredCollection)[0]; //since we expect to have exactly ONE collection with this name
+                    console.debug("Sending collection: " + JSON.stringify(collection, null, 2));
+                    res.send(collection);
                 } else {
-                    console.warn("There are not any contact with name " + name);
+                    console.warn("There are not any collection with name " + name);
                     res.sendStatus(404); // not found
                 }
             }
@@ -190,7 +190,7 @@ app.delete(BASE_API + "/collection/:name", (req, res) => {
                 var numRemoved = result.result.n;
                 console.debug("Collection removed: " + numRemoved);
                 if (numRemoved === 1) {
-                    console.debug("The contact with name " + name + " has been succesfully deleted, sending 204...");
+                    console.debug("The collection with name " + name + " has been succesfully deleted, sending 204...");
                     res.sendStatus(204); // no content
                 } else {
                     console.warn("There are no collection to delete");
@@ -204,17 +204,17 @@ app.delete(BASE_API + "/collection/:name", (req, res) => {
 // PUT over a specific resource
 app.put(BASE_API + "/collection/:name", (req, res) => {
     var name = req.params.name;
-    var updatedContact = req.body;
+    var updatedCollection = req.body;
     if (!name) {
         console.warn("New PUT request to /collection/:name without name, sending 400...");
         res.sendStatus(400); // bad request
-    } else if (!updatedContact) {
-        console.warn("New PUT request to /collection/ without contact, sending 400...");
+    } else if (!updatedCollection) {
+        console.warn("New PUT request to /collection/ without collection, sending 400...");
         res.sendStatus(400); // bad request
     } else {
-        console.info("New PUT request to /collection/" + name + " with data " + JSON.stringify(updatedContact, null, 2));
-        if (!updatedContact.name || !updatedContact.phone || !updatedContact.email) {
-            console.warn("The contact " + JSON.stringify(updatedContact, null, 2) + " is not well-formed, sending 422...");
+        console.info("New PUT request to /collection/" + name + " with data " + JSON.stringify(updatedCollection, null, 2));
+        if (!updatedCollection.name || !updatedCollection.phone || !updatedCollection.email) {
+            console.warn("The collection " + JSON.stringify(updatedCollection, null, 2) + " is not well-formed, sending 422...");
             res.sendStatus(422); // unprocessable entity
         } else {
             db.find({ "name": name }).toArray((err, collection) => {
@@ -223,11 +223,11 @@ app.put(BASE_API + "/collection/:name", (req, res) => {
                     res.sendStatus(500); // internal server error
                 } else {
                     if (collection.length > 0) {
-                        db.update({ name: name }, updatedContact);
-                        console.debug("Modifying contact with name " + name + " with data " + JSON.stringify(updatedContact, null, 2));
-                        res.send(updatedContact); // return the updated contact
+                        db.update({ name: name }, updatedCollection);
+                        console.debug("Modifying collection with name " + name + " with data " + JSON.stringify(updatedCollection, null, 2));
+                        res.send(updatedCollection); // return the updated collection
                     } else {
-                        console.warn("There are not any contact with name " + name);
+                        console.warn("There are not any collection with name " + name);
                         res.sendStatus(404); // not found
                     }
                 }
