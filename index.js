@@ -18,26 +18,45 @@ app.use(bp.json());
 
 var initialCollection = [
     {
-        "name": "John",
-        "email": "john.doe@example.com",
-        "phone": 954123456
+        "university": "Harvard University2",
+        "country": "United States of America",
+        "teaching_rating": 99.7,
+        "industry_income_rating": 34.5,
+        "total_score": 96.1,
+        "year": 2011
+      
     },
     {
-        "name": "Jane",
-        "email": "jane.doe@example.com",
-        "phone": 954654321
+    
+        "university": "California Institute of Technology2",
+        "country": "United States of  America",
+        "teaching_rating": 97.7,
+        "industry_income_rating": 83.7,
+        "total_score": 96,
+        "year": 2011
+      
     },
     {
-        "name": "Foo",
-        "email": "foo@example.com",
-        "phone": 616616616
+        "university": "Imperial College London2",
+        "country": "United Kingdom",
+        "teaching_rating": 89.2,
+        "industry_income_rating": 92.9,
+        "total_score": 90.6,
+        "year": 2011
+      
     },
     {
-        "name": "Bar",
-        "email": "bar@example.com",
-        "phone": 789321456
+    
+  
+        "university": "University of Tokyo2",
+        "country": "Japan",
+        "teaching_rating": 86.1,
+        "industry_income_rating": 76.6,
+        "total_score": 74.3,
+        "year": 2012
+      
     }
-];
+  ];
 
 var db;
 
@@ -92,7 +111,9 @@ app.post(BASE_API + "/collection", (req, res) => {
         res.sendStatus(400); //bad request
     } else {
         console.info("New POST request to /collection with body: " + JSON.stringify(newCollection, null, 2));
-        if (!newCollection.name || !newCollection.email || !newCollection.phone) {
+        if (!newCollection.name || !newCollection.country || !newCollection.teaching_rating 
+            || !newCollection.industry_income_rating || !newCollection.total_score || !newCollection.year
+            ) {
             console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 422...");
             res.sendStatus(422); // unprocessable entity
         } else {
@@ -213,7 +234,8 @@ app.put(BASE_API + "/collection/:name", (req, res) => {
         res.sendStatus(400); // bad request
     } else {
         console.info("New PUT request to /collection/" + name + " with data " + JSON.stringify(updatedCollection, null, 2));
-        if (!updatedCollection.name || !updatedCollection.phone || !updatedCollection.email) {
+        if (!updatedCollection.name || !updatedCollection.country || !updatedCollection.teaching_rating 
+            || !updatedCollection.industry_income_rating || !updatedCollection.total_score || !updatedCollection.year) {
             console.warn("The collection " + JSON.stringify(updatedCollection, null, 2) + " is not well-formed, sending 422...");
             res.sendStatus(422); // unprocessable entity
         } else {
