@@ -1,4 +1,4 @@
-const BASE_API = "/api/v1";
+
 
 // Get rid of _id when returning collection
 function formatCollection(collection) {
@@ -7,6 +7,9 @@ function formatCollection(collection) {
         return collection;
     });
 }
+
+const BASE_API = "/api/v1";
+
 var initialCollection = [
     {
         "name": "Harvard University",
@@ -56,7 +59,7 @@ var initialCollection = [
 ];
 
 module.exports.register = function (app, db) {
-    
+
     // loadInitialData 
     app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
         console.info("New loadInitialData  request to /collection/loadInitialData ");
