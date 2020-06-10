@@ -56,6 +56,7 @@ var initialCollection = [
     }
 ];
 
+var collectionAPI = require("./collectionAPI");
 collectionAPI.register(app, db);
 
 module.exports.register = function (app, db) {
