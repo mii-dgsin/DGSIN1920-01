@@ -9,6 +9,8 @@ app.use(bp.json());
 var db;
 
 MongoClient.connect(mdbURL, (err, client) => {
+    var collectionAPI = require("./collectionAPI");
+    collectionAPI.register(app, db);
     if (err) {
         console.error("DB connection error: " + err);
         process.exit(1);
@@ -29,9 +31,7 @@ MongoClient.connect(mdbURL, (err, client) => {
 
 
 
-var collectionAPI = require("./collectionAPI");
 
-collectionAPI.register(app, db);
 
 
 app.listen(process.env.PORT || 8080, () => {
