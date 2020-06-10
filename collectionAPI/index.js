@@ -59,18 +59,7 @@ module.exports.register = function (app, db) {
 
     // loadInitialData 
     app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
-        console.info("New loadInitialData  request to /collection/loadInitialData ");
-        db.find({}).toArray((err, collection) => {
-            if (err) {
-                console.error("Error getting data from DB: " + err);
-                res.sendStatus(500);
-            } else {
-                var formattedCollection = formatCollection(collection);
-                console.debug("Sending collection: " + JSON.stringify(formattedCollection, null, 2));
-                res.send(formattedCollection);
-            }
-        });
-    });
+        app.get(BASE_API + "/collection", (req, res));
 
     // GET a collection
     app.get(BASE_API + "/collection", (req, res) => {
