@@ -8,7 +8,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bp.json());
 var db;
 
-MongoClient.connect(mdbURL, (err, client) => {
+MongoClient.connect(mdbURL, (err, client,db) => {
     var collectionAPI = require("./collectionAPI");
     collectionAPI.register(app, db);
     if (err) {
