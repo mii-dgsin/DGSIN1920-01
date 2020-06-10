@@ -1,5 +1,5 @@
 const BASE_API = "/api/v1";
-var db;
+
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
@@ -55,6 +55,8 @@ var initialCollection = [
 
     }
 ];
+
+collectionAPI.register(app, db);
 
 module.exports.register = function (app, db) {
     app.get("/docs", (req, res) => {
