@@ -1,0 +1,22 @@
+{
+    "name": "dgsin1819-01",
+    "homepage": "https://github.com/mii-dgsin/DGSIN-01",
+    "authors": [
+      "José Antonio Gómez Romero <jagr511@gmail.com>"
+    ],
+    "description": "Collection App",
+    "main": "../index.js",
+    "license": "MIT",
+    "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test",
+      "tests"
+    ],
+    "dependencies": {
+      "bootstrap": "^4.3.1",
+      "angular-route": "^1.7.7",
+      "angular": "^1.7.7"
+    }
+  }
