@@ -11,8 +11,11 @@
     <tbody>
         <tr>
             <td><input class="form-control" ng-model="newCollection.name" /></td>
-            <td><input class="form-control" ng-model="newCollection.email" /></td>
-            <td><input class="form-control" ng-model="newCollection.phone" /></td>
+            <td><input class="form-control" ng-model="newCollection.country" /></td>
+            <td><input class="form-control" ng-model="newCollection.teaching_rating" /></td>
+            <td><input class="form-control" ng-model="newCollection.industry_income_rating" /></td>
+            <td><input class="form-control" ng-model="newCollection.total_score" /></td>
+            <td><input class="form-control" ng-model="newCollection.year" /></td>
             <td><button class="btn btn-primary" ng-click="addCollection()">Add</button></td>
         </tr>
         <tr ng-repeat="collectionAux in collection">
