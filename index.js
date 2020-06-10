@@ -2,7 +2,6 @@ var express = require("express");
 var path = require('path');
 var bp = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-const BASE_API = "/api/v1";
 const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db?retryWrites=true&w=majority";
 var app = express();
 app.use("/", express.static(path.join(__dirname, "public")));

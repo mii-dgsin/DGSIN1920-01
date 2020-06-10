@@ -1,3 +1,5 @@
+const BASE_API = "/api/v1";
+
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
