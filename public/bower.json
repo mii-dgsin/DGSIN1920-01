@@ -1,10 +1,10 @@
 {
     "name": "dgsin1819-01",
-    "homepage": "https://github.com/mii-dgsin/DGSIN-01",
+    "homepage": "https://github.com/mii-dgsin/DGSIN-01.git",
     "authors": [
       "José Antonio Gómez Romero <jagr511@gmail.com>"
     ],
-    "description": "Collection App",
+    "description": "App",
     "main": "../index.js",
     "license": "MIT",
     "ignore": [
