@@ -7,7 +7,24 @@ function formatCollection(collection) {
         return collection;
     });
 }
-
+MongoClient.connect(mdbURL, (err, client) => {
+    if (err) {
+        console.error("DB connection error: " + err);
+        process.exit(1);
+    } else {
+        db = client.db("dgsin1920-01-db").collection("collection");
+        db.find({}).toArray((err, collection) => {
+            if (err) {
+                console.error("Error getting data from DB: " + err);
+            } else if (collection.length == 0) {
+                console.info("Adding initial collection to empty DB");
+                db.insert(initialCollection);
+            } else {
+                console.info("Connected to the DB with " + collection.length + " collection");
+            }
+        });
+    }
+});
 var initialCollection = [
     {
         "name": "Harvard University",
@@ -56,8 +73,7 @@ var initialCollection = [
     }
 ];
 
-var collectionAPI = require("./collectionAPI");
-collectionAPI.register(app, db);
+
 
 module.exports.register = function (app, db) {
     app.get("/docs", (req, res) => {
