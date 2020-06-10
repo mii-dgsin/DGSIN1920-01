@@ -10,7 +10,7 @@ app.get("/docs", (req, res) => {
     res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");
 });
 
-app.use("/", express.static(path.join(__dirname, "public")));
+app.use( express.static(path.join(__dirname, "/public")));
 app.use(bp.json());
 var db;
 
