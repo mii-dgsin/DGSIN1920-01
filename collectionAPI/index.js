@@ -56,12 +56,24 @@ var initialCollection = [
 ];
 
 module.exports.register = function (app, db) {
-
+    
     // loadInitialData 
-
+    app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
+        console.info("New loadInitialData  request to /collection/loadInitialData ");
+        db.find({}).toArray((err, collection) => {
+            if (err) {
+                console.error("Error getting data from DB: " + err);
+                res.sendStatus(500);
+            } else {
+                var formattedCollection = formatCollection(collection);
+                console.debug("Sending collection: " + JSON.stringify(formattedCollection, null, 2));
+                res.send(formattedCollection);
+            }
+        });
+    });
 
     // GET a collection
-    app.get(BASE_API + "/collection", (req, res) || app.get(BASE_API + "/collection/loadInitialData", (req, res)=> {
+    app.get(BASE_API + "/collection", (req, res) => {
         console.info("New GET request to /collection");
         db.find({}).toArray((err, collection) => {
             if (err) {
@@ -73,7 +85,7 @@ module.exports.register = function (app, db) {
                 res.send(formattedCollection);
             }
         });
-    }));
+    });
 
     // POST over a collection
     app.post(BASE_API + "/collection", (req, res) => {
