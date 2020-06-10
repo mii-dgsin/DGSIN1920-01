@@ -8,9 +8,8 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bp.json());
 var db;
 
-MongoClient.connect(mdbURL, (err, client,db) => {
-    var collectionAPI = require("./collectionAPI");
-    collectionAPI.register(app, db);
+MongoClient.connect(mdbURL, (err, client) => {
+   
     if (err) {
         console.error("DB connection error: " + err);
         process.exit(1);
@@ -24,6 +23,8 @@ MongoClient.connect(mdbURL, (err, client,db) => {
                 db.insert(initialCollection);
             } else {
                 console.info("Connected to the DB with " + collection.length + " collection");
+                var collectionAPI = require("./collectionAPI");
+                collectionAPI.register(app, db);
             }
         });
     }
