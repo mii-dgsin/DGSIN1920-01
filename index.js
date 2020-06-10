@@ -3,13 +3,19 @@ var path = require('path');
 var bp = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db?retryWrites=true&w=majority";
+
 var app = express();
+
+app.get("/docs", (req, res) => {
+    res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");
+});
+
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bp.json());
 var db;
 
 MongoClient.connect(mdbURL, (err, client) => {
-   
+
     if (err) {
         console.error("DB connection error: " + err);
         process.exit(1);
@@ -23,20 +29,17 @@ MongoClient.connect(mdbURL, (err, client) => {
                 db.insert(initialCollection);
             } else {
                 console.info("Connected to the DB with " + collection.length + " collection");
-                var collectionAPI = require("./collectionAPI");
-                collectionAPI.register(app, db);
+
             }
         });
+
+        var collectionAPI = require("./collectionAPI");
+        collectionAPI.register(app, db);
+
+        app.listen(process.env.PORT || 8080, () => {
+            console.log("Server ready");
+        }).on("error", (e) => {
+            console.error("Server NOT ready!");
+        });
     }
-});
-
-
-
-
-
-
-app.listen(process.env.PORT || 8080, () => {
-    console.log("Server ready");
-}).on("error", (e) => {
-    console.error("Server NOT ready!");
 });

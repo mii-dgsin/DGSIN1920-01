@@ -55,12 +55,7 @@ var initialCollection = [
     }
 ];
 
-
-
 module.exports.register = function (app, db) {
-    app.get("/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");
-    });
 
     // loadInitialData 
     app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
