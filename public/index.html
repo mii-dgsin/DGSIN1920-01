@@ -1,6 +1,8 @@
 <html ng-app="CollectionManagerApp">
     <head>
         <title>My collection list</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>
         <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
@@ -8,6 +10,15 @@
         <script type="text/javascript" src="collectionManagerApp.js"></script>
         <script type="text/javascript" src="listCtrl.js"></script>
         <script type="text/javascript" src="editCtrl.js"></script>
+
+        <script type="text/javascript" src="analyticsCtrl.js"></script>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/series-label.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
     </head>
     <body>
         <div ng-view></div>

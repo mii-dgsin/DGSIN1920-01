@@ -43,3 +43,11 @@ MongoClient.connect(mdbURL, (err, client) => {
         });
     }
 });
+
+const BASE_API_PATH = "/api/v1";
+// GET a collection for widget visualization 
+app.get(BASE_API_PATH + "/data", function (req, res){
+	console.log("INFO: New GET request to /data");
+ 
+    res.send([2, 3, 4, 1, 2, 7, 13, 8, 4, 29, 1]);
+});

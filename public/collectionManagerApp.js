@@ -10,6 +10,12 @@ angular.module("CollectionManagerApp", ["ngRoute"]).config(function ($routeProvi
             templateUrl: "edit.html",
             controller: "EditCtrl"
         }
+    )
+    .when("/analytics",
+        {
+            templateUrl: "analytics.html",
+            controller: "AnalyticsCtrl"
+        }
     );
 
     console.log("App initialized and configured");
