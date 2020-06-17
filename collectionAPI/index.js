@@ -101,8 +101,8 @@ module.exports.register = function (app, db) {
             if (!newCollection.name || !newCollection.country || !newCollection.teaching_rating
                 || !newCollection.industry_income_rating || !newCollection.total_score || !newCollection.year
             ) {
-                console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 422...");
-                res.sendStatus(422); // unprocessable entity
+                console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 400...");
+                res.sendStatus(400); // unprocessable entity
             } else {
                 db.find({ "name": newCollection.name }).toArray((err, collection) => {
                     if (err) {
