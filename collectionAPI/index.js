@@ -178,13 +178,8 @@ module.exports.register = function (app, db) {
     // POST a specific resource
     app.post(BASE_API + "/collection/:name", (req, res) => {
         var name = req.params.name;
-        if (name) {
-            console.error("The data already exists");
-            res.sendStatus(409);
-        } else {
-            console.warn("New POST request to /collection/" + name + ", sending 405...");
+        console.warn("New POST request to /collection/" + name + ", sending 405...");
             res.sendStatus(405); // method not allowed
-        }
     });
 
     // DELETE a specific resource
