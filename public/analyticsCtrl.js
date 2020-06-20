@@ -59,7 +59,7 @@ angular
 							
 							})},{
 							
-								name: 'total_score',
+								name: 'Total Score',
 							data: response.data.map(function (d){
 								return d.total_score;
 							})}

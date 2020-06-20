@@ -1,3 +1,5 @@
+var updateCollectionAux;
+var updateExistCollectionAux;
 angular.module("CollectionManagerApp")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
         console.log("EditCtrl initialized.");
@@ -14,7 +16,9 @@ angular.module("CollectionManagerApp")
         getCollection();
 
         $scope.updateCollection = function updateCollection() {
+            updateCollectionAux=true;
             $http.put(APIurl, $scope.updatedCollection).then(function (response) {
+                validateupdateCollection();
                 console.log("Collection UPDATED");
                 $location.path("/");
             });
@@ -27,3 +31,11 @@ angular.module("CollectionManagerApp")
 
 
     }]);
+
+    function validateupdateCollection() {
+        updateCollectionAux;
+        if (updateCollectionAux==true){
+            alert('Dato actualizado correctamente');
+        }
+        
+    };

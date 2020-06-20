@@ -1,5 +1,6 @@
 
-
+   var addExistCollectionAux;
+   var addCollectionAux;
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
@@ -94,6 +95,7 @@ module.exports.register = function (app, db) {
     app.post(BASE_API + "/collection", (req, res) => {
         var newCollection = req.body;
         if (!newCollection) {
+ 
             console.warn("New POST request to /collection/ without collection, sending 400...");
             res.sendStatus(400); //bad request
         } else {
@@ -101,6 +103,7 @@ module.exports.register = function (app, db) {
             if (!newCollection.name || !newCollection.country || !newCollection.teaching_rating
                 || !newCollection.industry_income_rating || !newCollection.total_score || !newCollection.year
             ) {
+             
                 console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 400...");
                 res.sendStatus(400); // unprocessable entity
             } else {
@@ -110,9 +113,10 @@ module.exports.register = function (app, db) {
                         res.sendStatus(500);
                     } else {
                         if (collection.length > 0) {
+                           
                             console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " already exists, sending 409...");
                             res.sendStatus(409); // conflict
-                        } else {
+                        } else {         
                             console.debug("Adding collection " + JSON.stringify(newCollection, null, 2));
                             db.insert(newCollection);
                             res.sendStatus(201); // created
@@ -198,6 +202,7 @@ module.exports.register = function (app, db) {
                     var numRemoved = result.result.n;
                     console.debug("Collection removed: " + numRemoved);
                     if (numRemoved === 1) {
+                        
                         console.debug("The collection with name " + name + " has been succesfully deleted, sending 204...");
                         res.sendStatus(204); // no content
                     } else {
