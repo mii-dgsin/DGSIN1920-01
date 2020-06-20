@@ -1,6 +1,35 @@
 # Documentación proyecto DGSIN1920-01
 
-------------------------------
+-----------
+Fuente de los datos: <https://data.world/hhaveliw/world-university-ranking-2016>
+
+## Acceder a todas las universidades
+
+* Petición
+  * GET  <https://dgsin1920-01.herokuapp.com/api/v1/colletion>
+* Respuesta:
+  
+  ```json
+   [
+	{
+		"name": "University of North Carolina at Chapel Hill",
+		"country": "United States of America",
+		"teaching_rating": 67.6,
+		"industry_income_rating": 35.5,
+		"total_score": 69.3,
+		"year": "2012"
+	},
+	{
+		"name": "New York University",
+		"country": "United States of America",
+		"teaching_rating": 60.2,
+		"industry_income_rating": 30.9,
+		"total_score": 69 ,
+		"year": "2012"
+	},
+
+... ]
+
 Crear una nueva universidad:
 Petición:
 POST .../collection
