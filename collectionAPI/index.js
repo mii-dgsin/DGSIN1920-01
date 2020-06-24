@@ -1,4 +1,5 @@
 
+var bp = require("body-parser");
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
@@ -60,7 +61,7 @@ const BASE_API = "/api/v1";
 module.exports.register = function (app, db) {
 
     // loadInitialData 
-    app.use(bp.json());
+   app.use(bp.json());
 
     app.get(BASE_API + "/collection/docs",(req,res)=>{
         res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");

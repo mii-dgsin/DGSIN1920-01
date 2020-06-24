@@ -22,65 +22,36 @@ angular
 						yAxis: {
 							title: {
 								text: 'Rating (0-100)'
-							},
-							categories: response.data.map(function (d){
-								return d.total_score;
-							})
+							}
 						},
 					
 						xAxis: {
-							title: {
-								text: 'University',
-							},
-							categories: response.data.map(function (d){
+							
+							categories: response.data.map(function(d){
 								return d.name;
 							})
 							
 						},
 						
-						
-					
-						legend: {
-							layout: 'vertical',
-							align: 'right',
-							verticalAlign: 'middle'
-						},
-					
-						
 						series: [{
-							name: 'Teaching Rating',
+							name: 'Teaching rating',
 							data: response.data.map(function (d){
 								return d.teaching_rating;
 							})},{
-							
-								name: 'Industry Income Rating',
+							name: 'Industry income rating',
 							data: response.data.map(function (d){
 								return d.industry_income_rating;
 							
 							})},{
-							
-								name: 'Total Score',
+							name: 'Total score',
 							data: response.data.map(function (d){
 								return d.total_score;
 							})}
-						],
-					
-						responsive: {
-							rules: [{
-								
-								chartOptions: {
-									legend: {
-										layout: 'horizontal',
-										align: 'center',
-										verticalAlign: 'bottom'
-									}
-								}
-							}]
-						}
+						]
 					
 					});
 
-					});
-				}		
-		$scope.update(); 
-    }]);
+				});
+			}		
+	$scope.update()
+	}])

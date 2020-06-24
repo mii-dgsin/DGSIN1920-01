@@ -1,22 +1,20 @@
 var express = require("express");
 var path = require('path');
+var app = express();
 var bp = require('body-parser');
 var cors = require('cors');
-const api_externa = "https://dgsin1920-02.herokuapp.com";
+var request = require('request');
+
 
 var MongoClient = require('mongodb').MongoClient;
 const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db2?retryWrites=true&w=majority"; 
              
-
-var app = express();
-
-
-
-app.use( express.static(path.join(__dirname, "/public")));
-app.use(bp.json());
-app.use(cors());
 var db;
 var collectionAPI = require("./collectionAPI");
+
+
+
+
 
 MongoClient.connect(mdbURL, (err, client) => {
 
@@ -43,20 +41,23 @@ MongoClient.connect(mdbURL, (err, client) => {
 
 
 
-app.listen(process.env.PORT || 8080, () => {
-	console.log("Server ready");
-}).on("error", (e) => {
-    console.error("Server NOT ready!");
-});
 
 
-var request = require('request');
+app.use( express.static(path.join(__dirname, "/public")));
 var apiServerHost = "http://dgsin1920-01.herokuapp.com"; 
 app.use("/proxy01", (req, res) => {
 	var url = apiServerHost + req.url;
 	console.log("piped: " + req.baseUrl + req.url);
 	req.pipe(request(url)).pipe(res); 
 }); 
+
+app.use(cors());
+
+app.listen(process.env.PORT || 8080, () => {
+	console.log("Server ready");
+}).on("error", (e) => {
+    console.error("Server NOT ready!");
+});
 
 /*const BASE_API_PATH = "/api/v1";
 // GET a collection for widget visualization 

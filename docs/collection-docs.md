@@ -109,7 +109,7 @@ Fuente de los datos: <https://data.world/hhaveliw/world-university-ranking-2016>
 ## Eliminar una universidad en concreto
 
 * Petición
-  * DELETE <https://dgsin1920-13.herokuapp.com/api/v1/sensores/:name>
+  * DELETE <https://dgsin1920-13.herokuapp.com/api/v1/collection/:name>
   * Por ejemplo: DELETE <https://dgsin1920-13.herokuapp.com/api/v1/collection/Harvard_University>
 * Respuesta:
 

@@ -1,6 +1,6 @@
 <html ng-app="CollectionManagerApp">
     <head>
-        <title>My collection list</title>
+        <title>Universities</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
@@ -23,6 +23,33 @@
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     </head>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="pt-3 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/#!/';">Inicio</button>
+                </div>
+                <div class="pt-3 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/#!/list';">Listado de recursos
+                        disponibles</button>
+                </div>
+                <div class="pt-1 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/#!/analytics';">Visualización de datos<br>de
+                        universidades</button>
+                </div>
+                <div class="pt-1 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/#!/integrations';">Visualización de
+                        datos<br>de APIs externas</button>
+                </div>
+                <div class="pt-1 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/#!/about';">About</button>
+                </div>
+                <div class="pt-1 pl-3">
+                    <button class="btn btn-dark" onclick="location.href = '/api/v1/collection/docs';">Documentación Postman</button>
+                </div>
+            </div>
+        </div>
+    </nav>
     <body>
         <div ng-view></div>
     </body>

@@ -1,16 +1,29 @@
 angular.module("CollectionManagerApp", ["ngRoute"]).config(function ($routeProvider) {
     $routeProvider.when("/",
+	{
+            templateUrl: "static.html",
+        }
+    )
+		.when("/about", {
+            templateUrl:"about.html"
+        })
+		 .when("/list",
         {
             templateUrl: "list.html",
             controller: "ListCtrl"
         }
     )
-    .when("/collection/:name",
+		.when("/collection/:name",
         {
             templateUrl: "edit.html",
             controller: "EditCtrl"
         }
     )
+		.when("/integrations",
+            {
+                templateUrl: "integrations.html",
+                controller: "IntegrationsCtrl"
+            })
     .when("/analytics",
         {
             templateUrl: "analytics.html",
@@ -20,3 +33,6 @@ angular.module("CollectionManagerApp", ["ngRoute"]).config(function ($routeProvi
 
     console.log("App initialized and configured");
 });
+
+ 
+       
