@@ -34,7 +34,7 @@ Fuente de los datos: <https://data.world/hhaveliw/world-university-ranking-2016>
 
 * Petición
   * GET <https://dgsin1920-01.herokuapp.com/api/v1/collection/:name>
-  * Por ejemplo: GET <https://dgsin1920-01.herokuapp.com/api/v1/collection/Harvard University>
+  * Por ejemplo: GET <https://dgsin1920-01.herokuapp.com/api/v1/collection/Harvard_University>
 * Respuesta:
 
   ```json
@@ -110,7 +110,7 @@ Fuente de los datos: <https://data.world/hhaveliw/world-university-ranking-2016>
 
 * Petición
   * DELETE <https://dgsin1920-13.herokuapp.com/api/v1/sensores/:name>
-  * Por ejemplo: DELETE <https://dgsin1920-13.herokuapp.com/api/v1/collection/Harvard University>
+  * Por ejemplo: DELETE <https://dgsin1920-13.herokuapp.com/api/v1/collection/Harvard_University>
 * Respuesta:
 
   ```html
@@ -120,7 +120,7 @@ Fuente de los datos: <https://data.world/hhaveliw/world-university-ranking-2016>
  ## Actualizar un dato en concreto
 
 * Petición
-  * PUT <https://dgsin1920-13.herokuapp.com/api/v1/collection/Harvard University>
+  * PUT <https://dgsin1920-13.herokuapp.com/api/v1/collection/Harvard_University>
   * Cuerpo:
   
    ```json
