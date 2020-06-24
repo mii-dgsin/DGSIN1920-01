@@ -1,6 +1,4 @@
 
-   var addExistCollectionAux;
-   var addCollectionAux;
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
@@ -11,7 +9,7 @@ function formatCollection(collection) {
 
 const BASE_API = "/api/v1";
 
-var initialCollection = [
+/*var initialCollection = [
     {
         "name": "Harvard University",
         "country": "United States of America",
@@ -57,21 +55,51 @@ var initialCollection = [
         "year": 2016
 
     }
-];
+];*/
 
 module.exports.register = function (app, db) {
 
     // loadInitialData 
+    app.use(bp.json());
+
+    app.get(BASE_API + "/collection/docs",(req,res)=>{
+        res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");
+                  
+     });
+
     app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
-        console.info("New loadInitialData  request to /collection/loadInitialData ");
+
         db.find({}).toArray((err, collection) => {
-            if (err) {
-                console.error("Error getting data from DB: " + err);
-                res.sendStatus(500);
-            } else {
-                var formattedCollection = formatCollection(collection);
-                console.debug("Sending collection: " + JSON.stringify(formattedCollection, null, 2));
-                res.send(formattedCollection);
+            if (collection.length == 0) {
+                console.info("Empty database, adding initial values");
+                var jsondb = require("../bd/bd.json");
+                for (var i = 0; i < jsondb.length; i++) {
+                    
+                    var name = jsondb[i].name;
+                    var country = jsondb[i].country;
+                    var teaching_rating = jsondb[i].teaching_rating;
+                    var industry_income_rating = jsondb[i].industry_income_rating;
+					var total_score = jsondb[i].total_score;
+					var year = jsondb[i].year;
+                 
+                    var entrada = {
+                        "name": name,
+                        "country": country,
+                        "teaching_rating": teaching_rating,
+                        "industry_income_rating": industry_income_rating,
+						"total_score": total_score,
+						"year": year,
+                       
+                    }
+
+                    db.insert(entrada);
+                }
+                console.log("Insertion finished");
+                res.sendStatus(201);
+            }
+            else {
+                console.warn("Database not empty, nothing is done");
+                res.sendStatus(409);
             }
         });
     });
