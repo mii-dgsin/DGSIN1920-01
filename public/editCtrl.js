@@ -4,7 +4,7 @@ angular.module("CollectionManagerApp")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
         console.log("EditCtrl initialized.");
         var collectionName = $routeParams.name;
-        var APIurl = "/api/v1/collection/" + collectionName;
+        var APIurl = "proxy01/api/v1/environment-stats" + collectionName;
 
         function getCollection() {
             $http.get(APIurl).then(function (response) {

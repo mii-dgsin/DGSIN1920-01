@@ -4,7 +4,7 @@ var app = express();
 var bp = require('body-parser');
 var cors = require('cors');
 var request = require('request');
-
+const api_externa = "https://dgsin1920-02.herokuapp.com";
 
 var MongoClient = require('mongodb').MongoClient;
 const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db2?retryWrites=true&w=majority"; 
@@ -43,20 +43,19 @@ MongoClient.connect(mdbURL, (err, client) => {
 
 
 
-app.use( express.static(path.join(__dirname, "/public")));
-var apiServerHost = "http://dgsin1920-01.herokuapp.com"; 
+app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/proxy01", (req, res) => {
-	var url = apiServerHost + req.url;
-	console.log("piped: " + req.baseUrl + req.url);
-	req.pipe(request(url)).pipe(res); 
-}); 
-
+    var url_api = api_externa + req.url;
+    console.log(req.baseUrl + req.url + " correctamente enrutado");
+    req.pipe(request(url_api)).pipe(res);
+});
 app.use(cors());
 
+
 app.listen(process.env.PORT || 8080, () => {
-	console.log("Server ready");
+    console.log("Servidor listo");
 }).on("error", (e) => {
-    console.error("Server NOT ready!");
+    console.error("Ha ocurrido un problema");
 });
 
 /*const BASE_API_PATH = "/api/v1";
