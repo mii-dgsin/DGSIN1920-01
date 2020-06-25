@@ -4,7 +4,7 @@ var deleteCollections;
 angular.module("CollectionManagerApp")
     .controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
         console.log("ListCtrl initialized.");
-        var APIurl = "http://dgsin1920-01.herokuapp.com/proxy01/api/v1/collection";
+        var APIurl = "http://dgsin1920-01.herokuapp.com/api/v1/collection";
         
         function getCollections () {
             $http.get(APIurl).then(function (response) {
