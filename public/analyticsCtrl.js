@@ -81,7 +81,21 @@ angular
 							data: response.data.map(function (d){
 								return d.total_score;
 							})}
-						]
+						],
+						responsive: {
+							rules: [{
+								condition: {
+									maxWidth: 500
+								},
+								chartOptions: {
+									legend: {
+										layout: 'horizontal',
+										align: 'center',
+										verticalAlign: 'bottom'
+									}
+								}
+							}]
+						}
 					
 					});
 
