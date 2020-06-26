@@ -1,10 +1,9 @@
 var updateCollectionAux;
-var updateExistCollectionAux;
 angular.module("CollectionManagerApp")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", function ($scope, $http, $routeParams, $location) {
         console.log("EditCtrl initialized.");
         var collectionName = $routeParams.name;
-        var APIurl = "proxy01/api/v1/environment-stats" + collectionName;
+        var APIurl = "/api/v1/collection/" + collectionName;
 
         function getCollection() {
             $http.get(APIurl).then(function (response) {
@@ -18,7 +17,7 @@ angular.module("CollectionManagerApp")
         $scope.updateCollection = function updateCollection() {
             updateCollectionAux=true;
             $http.put(APIurl, $scope.updatedCollection).then(function (response) {
-                validateupdateCollection();
+                validateupdatedCollection();
                 console.log("Collection UPDATED");
                 $location.path("/");
             });
@@ -32,7 +31,7 @@ angular.module("CollectionManagerApp")
 
     }]);
 
-    function validateupdateCollection() {
+    function validateupdatedCollection() {
         updateCollectionAux;
         if (updateCollectionAux==true){
             alert('Dato actualizado correctamente');
