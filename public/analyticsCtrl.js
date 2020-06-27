@@ -12,10 +12,6 @@ angular
 					Highcharts.chart('container', {
 
 						title: {
-							text: 'World University Ranking'
-						},
-					
-						subtitle: {
 							text: 'Teaching rating'
 						},
 					
@@ -50,10 +46,6 @@ angular
 					Highcharts.chart('container2', {
 
 						title: {
-							text: 'World University Ranking'
-						},
-					
-						subtitle: {
 							text: 'Industry income rating'
 						},
 					

@@ -1,16 +1,16 @@
 function charts1($http, $window, url) {
-    var tiempo = new Set();
-    var datos_energia = {};
-    var datos_carbono = {};
-    var datos_poblacion = {};
+    var date = new Set();
+    var pib = {};
+    var desempleo = {};
+    var deuda = {};
     var paises = new Set();
-    var graph_data_energia = {};
-    var graph_data_carbono = {};
-    var graph_data_poblacion = {};
-    var series_datos_energia = [];
-    var series_datos_carbono = [];
-    var series_datos_poblacion = [];
-    var cats;
+    var graph_pib = {};
+    var graph_desempleo = {};
+    var graph_deuda = {};
+    var series_pib = [];
+    var series_desempleo = [];
+    var series_deuda = [];
+    var units;
 
     $http.get(url).then(function onSuccess(res) {
         if (res.status == 200 && res.data.length > 0) {
@@ -21,78 +21,78 @@ function charts1($http, $window, url) {
                 reg = datos_raw[i];
                 if (!paises.has(reg.country)) {
                     paises.add(reg.country);
-                    datos_energia[reg.country] = {};
-                    datos_energia[reg.country][reg.year] = reg["energy-use"];
-                    datos_carbono[reg.country] = {};
-                    datos_carbono[reg.country][reg.year] = reg["carbon-emission"];
-                    datos_poblacion[reg.country] = {};
-                    datos_poblacion[reg.country][reg.year] = reg["population-total"];
-                    tiempo.add(reg.year);
+                    pib[reg.country] = {};
+                    pib[reg.country][reg.year] = reg["gdp"];
+                    desempleo[reg.country] = {};
+                    desempleo[reg.country][reg.year] = reg["unemployment"];
+                    deuda[reg.country] = {};
+                    deuda[reg.country][reg.year] = reg["debt"];
+                    date.add(reg.year);
                 }
                 else {
-                    tiempo.add(reg.year);
-                    datos_energia[reg.country][reg.year] = reg["energy-use"];
-                    datos_carbono[reg.country][reg.year] = reg["carbon-emission"];
-                    datos_poblacion[reg.country][reg.year] = reg["population-total"];
+                    date.add(reg.year);
+                    pib[reg.country][reg.year] = reg["gdp"];
+                    desempleo[reg.country][reg.year] = reg["unemployment"];
+                    deuda[reg.country][reg.year] = reg["debt"];
                 }
             }
 
-            cats = Array.from(tiempo);
+            units = Array.from(date);
 
-            for (var i in datos_energia) {
+            for (var i in pib) {
                 var array = [];
 
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
-                    if (!datos_energia[i][f]) {
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
+                    if (!pib[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_energia[i][f])
+                        array.push(pib[i][f])
                     }
                 }
-                graph_data_energia[i] = array;
+                graph_pib[i] = array;
                 
             }
             
-            for (var i in datos_carbono) {
+            for (var i in desempleo) {
                 var array = [];
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
-                    if (!datos_carbono[i][f]) {
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
+                    if (!desempleo[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_carbono[i][f])
+                        array.push(desempleo[i][f])
                     }
                 }
-                graph_data_carbono[i] = array;
+                graph_desempleo[i] = array;
             }
 
-            for (var i in datos_poblacion) {
+            for (var i in deuda) {
                 var array = [];
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
-                    if (!datos_poblacion[i][f]) {
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
+                    if (!deuda[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_poblacion[i][f])
+                        array.push(deuda[i][f])
                     }
                 }
-                graph_data_poblacion[i] = array;
+                graph_deuda[i] = array;
             }
             
-            for (var o in graph_data_energia) {
-                series_datos_energia.push({ name: o, data: graph_data_energia[o] });
+            for (var o in graph_pib) {
+                series_pib.push({ name: o, data: graph_pib[o] });
             }
-            console.log("series_datos_energia",series_datos_energia);
-            for (var o in graph_data_carbono) {
-                series_datos_carbono.push({ name: o, data: graph_data_carbono[o] });
+            console.log("series_pib",series_pib);
+            for (var o in graph_desempleo) {
+                series_desempleo.push({ name: o, data: graph_desempleo[o] });
             }
 
-            for (var o in graph_data_poblacion) {
-                series_datos_poblacion.push({ name: o, data: graph_data_poblacion[o] });
+            for (var o in graph_deuda) {
+                series_deuda.push({ name: o, data: graph_deuda[o] });
             }
 
             console.log("Datos cargados y procesados para su visualización");
@@ -100,92 +100,80 @@ function charts1($http, $window, url) {
             const min = arr => Math.min(...arr);
             const max = arr => Math.max(...arr);
 
-            Highcharts.chart('grafica1', {
+            Highcharts.chart('container1', {
                 chart: {
-                    type: 'column'
+                    type: 'bar'
                 },
                 title: {
-                    text: 'Uso de energía'
+                    text: 'PIB'
                 },
                 subtitle: {
-                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/environment-stats'
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/economic-stats'
                 },
 
                 xAxis: {
-                    categories: cats,
+                    categories: units,
                     crosshair: true
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'kg de petróleo equivalente'
+                        text: 'euros (1T = 10 elevado a 6)'
                     }
                 },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f}kg</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
+                legend: {
+                    reversed: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    series: {
+                        stacking: 'normal'
                     }
                 },
-                series: series_datos_energia
+                series: series_pib
             });
 
-            Highcharts.chart('grafica2', {
+            Highcharts.chart('container2', {
                 chart: {
-                    type: 'column'
+                    type: 'bar'
                 },
                 title: {
-                    text: 'Emisiones de carbono (C0<sub>2</sub>)',
+                    text: 'Desempleo',
                     useHTML: true
                 },
                 subtitle: {
-                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/environment-stats'
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/economic-stats'
                 },
 
                 xAxis: {
-                    categories: cats,
+                    categories: units,
                     crosshair: true
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'kt (kiloToneladas)'
+                        text: '% Desempleo'
                     }
                 },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f}kt</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
+                legend: {
+                    reversed: true
                 },
                 plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
+                    series: {
+                        stacking: 'normal'
                     }
                 },
-                series: series_datos_carbono
+                series: series_desempleo
             });
 
-            Highcharts.chart('grafica3', {
+            Highcharts.chart('container3', {
                 chart: {
-                    type: 'area'
+                    type: 'column'
                 },
                 title: {
-                    text: 'Población por años'
+                    text: 'Deuda por años'
                 },
                 subtitle: {
-                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/environment-stats'
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/economic-stats'
                 },
 
                 xAxis: {
@@ -196,38 +184,33 @@ function charts1($http, $window, url) {
                         }
                     },
                     accessibility: {
-                        rangeDescription: min(tiempo) + " a " + max(tiempo)
+                        rangeDescription: min(date) + " a " + max(date)
                     }
                 },
                 yAxis: {
                     title: {
-                        text: 'Population'
+                        text: 'miles de millones de euros'
                     },
                     labels: {
                         formatter: function () {
-                            return this.value / 1000000 + 'M';
+                            return this.value;
                         }
                     }
+                },
+                legend: {
+                    shadow: false
                 },
                 tooltip: {
-                    pointFormat: '{series.name} - {point.y:,.0f}</b><br/>people in {point.x}'
+                    shared: true
                 },
                 plotOptions: {
-                    area: {
-                        pointStart: min(tiempo),
-                        marker: {
-                            enabled: false,
-                            symbol: 'circle',
-                            radius: 2,
-                            states: {
-                                hover: {
-                                    enabled: true
-                                }
-                            }
-                        }
+                    column: {
+                        grouping: false,
+                        shadow: false,
+                        borderWidth: 0
                     }
                 },
-                series: series_datos_poblacion
+                series: series_deuda
             });
         }
     },
@@ -238,7 +221,7 @@ function charts1($http, $window, url) {
 }
 
 function charts2($http, $window, url) {
-    var tiempo = new Set();
+    var date = new Set();
     var datos_consumo = {};
     var datos_trenes = {};
     var datos_aviones = {};
@@ -249,7 +232,7 @@ function charts2($http, $window, url) {
     var series_datos_consumo = [];
     var series_datos_trenes = [];
     var series_datos_aviones = [];
-    var cats;
+    var units;
 
     $http.get(url).then(function onSuccess(res) {
         if (res.status == 200 && res.data.length > 0) {
@@ -266,23 +249,23 @@ function charts2($http, $window, url) {
                     datos_trenes[reg.country][reg.year] = reg["rail-lns"];
                     datos_aviones[reg.country] = {};
                     datos_aviones[reg.country][reg.year] = reg["air-trnspt"];
-                    tiempo.add(reg.year);
+                    date.add(reg.year);
                 }
                 else {
-                    tiempo.add(reg.year);
+                    date.add(reg.year);
                     datos_consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
                     datos_trenes[reg.country][reg.year] = reg["rail-lns"];
                     datos_aviones[reg.country][reg.year] = reg["air-trnspt"]
                 }
             }
 
-            cats = Array.from(tiempo);
+            units = Array.from(date);
 
             for (var i in datos_consumo) {
                 var array = [];
 
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
                     if (!datos_consumo[i][f]) {
                         array.push(null);
                     }
@@ -294,8 +277,8 @@ function charts2($http, $window, url) {
             }
             for (var i in datos_trenes) {
                 var array = [];
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
                     if (!datos_trenes[i][f]) {
                         array.push(null);
                     }
@@ -308,8 +291,8 @@ function charts2($http, $window, url) {
 
             for (var i in datos_aviones) {
                 var array = [];
-                for (var j = 0; j < cats.length; j++) {
-                    var f = cats[j];
+                for (var j = 0; j < units.length; j++) {
+                    var f = units[j];
                     if (!datos_aviones[i][f]) {
                         array.push(null);
                     }
@@ -337,9 +320,9 @@ function charts2($http, $window, url) {
             const min = arr => Math.min(...arr);
             const max = arr => Math.max(...arr);
 
-            Highcharts.chart('grafica4', {
+            Highcharts.chart('container4', {
                 chart: {
-                    type: 'area'
+                    type: 'column'
                 },
                 title: {
                     text: 'Consumo por años'
@@ -355,7 +338,7 @@ function charts2($http, $window, url) {
                     }
                 },
                 accessibility: {
-                    rangeDescription: min(tiempo) + " a " + max(tiempo)
+                    rangeDescription: min(date) + " a " + max(date)
                 }
             },
                 yAxis: {
@@ -368,28 +351,23 @@ function charts2($http, $window, url) {
                     }
                 }
             },
-                tooltip: {
-                pointFormat: '{series.name} - {point.y:,.0f}</b><br/>khw per cápita en {point.x}'
+            legend: {
+                shadow: false
             },
-                plotOptions: {
-                area: {
-                    pointStart: min(tiempo),
-                    marker: {
-                        enabled: false,
-                        symbol: 'circle',
-                        radius: 2,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
-                    }
+            tooltip: {
+                shared: true
+            },
+            plotOptions: {
+                column: {
+                    grouping: false,
+                    shadow: false,
+                    borderWidth: 0
                 }
             },
                 series: series_datos_consumo
             });
 
-    Highcharts.chart('grafica5', {
+    Highcharts.chart('container5', {
         chart: {
             type: 'area'
         },
@@ -400,10 +378,14 @@ function charts2($http, $window, url) {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
-            categories: cats,
-            tickmarkPlacement: 'on',
-            title: {
-                enabled: false
+            allowDecimals: false,
+            labels: {
+                formatter: function () {
+                    return this.value;
+                }
+            },
+            accessibility: {
+                rangeDescription: min(date) + " a " + max(date)
             }
         },
         yAxis: {
@@ -416,25 +398,31 @@ function charts2($http, $window, url) {
                 }
             }
         },
+        legend: {
+            shadow: false
+        },
         tooltip: {
-            split: true,
-            valueSuffix: ' km'
+            pointFormat: '{series.name} - {point.y:,.0f}</b><br/>people in {point.x}'
         },
         plotOptions: {
             area: {
-                stacking: 'normal',
-                lineColor: '#666666',
-                lineWidth: 1,
+                pointStart: min(date),
                 marker: {
-                    lineWidth: 1,
-                    lineColor: '#666666'
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
                 }
             }
         },
         series:series_datos_trenes
     });
 
-    Highcharts.chart('grafica6', {
+    Highcharts.chart('container6', {
         chart: {
             type: 'area'
         },
@@ -445,10 +433,14 @@ function charts2($http, $window, url) {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
-            categories: cats,
-            tickmarkPlacement: 'on',
-            title: {
-                enabled: false
+            allowDecimals: false,
+            labels: {
+                formatter: function () {
+                    return this.value;
+                }
+            },
+            accessibility: {
+                rangeDescription: min(date) + " a " + max(date)
             }
         },
         yAxis: {
@@ -461,18 +453,17 @@ function charts2($http, $window, url) {
                 }
             }
         },
+        legend: {
+            shadow: false
+        },
         tooltip: {
-            split: true,
+            shared: true
         },
         plotOptions: {
-            area: {
-                stacking: 'normal',
-                lineColor: '#666666',
-                lineWidth: 1,
-                marker: {
-                    lineWidth: 1,
-                    lineColor: '#666666'
-                }
+            column: {
+                grouping: false,
+                shadow: false,
+                borderWidth: 0
             }
         },
         series:series_datos_aviones
@@ -488,18 +479,18 @@ function onReject(res) {
 
 angular.module("CollectionManagerApp")
     .controller("IntegrationsCtrl", ["$scope", "$http", function ($scope, $http, $window) {
-        var url_api1 = "proxy01/api/v1/environment-stats";
-        var url_api2 = "proxy01/api/v1/infrastructure-stats";
+        var url_apiA = "proxy01/api/v1/economic-stats";
+        var url_apiB = "proxy01/api/v1/infrastructure-stats";
 
-        function integracion1() {
-            charts1($http, $window, url_api1);
+        function integrationA() {
+            charts1($http, $window, url_apiA);
         }
 
-        function integracion2() {
-            charts2($http, $window, url_api2);
+        function integrationB() {
+            charts2($http, $window, url_apiB);
         }
         console.log("Controlador para visualizar los datos de nuestra API de manera gráfica listo.");
         //get();
-        integracion1();
-        integracion2();
+        integrationA();
+        integrationB();
     }]);
