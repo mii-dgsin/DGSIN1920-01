@@ -167,7 +167,7 @@ function charts1($http, $window, url) {
 
             Highcharts.chart('container3', {
                 chart: {
-                    type: 'column'
+                    type: 'area'
                 },
                 title: {
                     text: 'Deuda por años'
@@ -177,16 +177,13 @@ function charts1($http, $window, url) {
                 },
 
                 xAxis: {
-                    allowDecimals: false,
-                    labels: {
-                        formatter: function () {
-                            return this.value;
-                        }
-                    },
-                    accessibility: {
-                        rangeDescription: min(date) + " a " + max(date)
+                    categories: units,
+                    tickmarkPlacement: 'on',
+                    title: {
+                        enabled: false
                     }
                 },
+                    
                 yAxis: {
                     title: {
                         text: 'miles de millones de euros'
@@ -197,17 +194,19 @@ function charts1($http, $window, url) {
                         }
                     }
                 },
-                legend: {
-                    shadow: false
-                },
+                
                 tooltip: {
-                    shared: true
+                    split: true
                 },
                 plotOptions: {
-                    column: {
-                        grouping: false,
-                        shadow: false,
-                        borderWidth: 0
+                    area: {
+                        stacking: 'normal',
+                        lineColor: '#666666',
+                        lineWidth: 1,
+                        marker: {
+                            lineWidth: 1,
+                            lineColor: '#666666'
+                        }
                     }
                 },
                 series: series_deuda
@@ -322,7 +321,7 @@ function charts2($http, $window, url) {
 
             Highcharts.chart('container4', {
                 chart: {
-                    type: 'column'
+                    type: 'area'
                 },
                 title: {
                     text: 'Consumo por años'
@@ -331,37 +330,36 @@ function charts2($http, $window, url) {
                 text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
             },
                 xAxis: {
-                allowDecimals: false,
-                labels: {
-                    formatter: function () {
-                        return this.value;
+                    categories: units,
+                    tickmarkPlacement: 'on',
+                    title: {
+                        enabled: false
                     }
+                
                 },
-                accessibility: {
-                    rangeDescription: min(date) + " a " + max(date)
-                }
-            },
                 yAxis: {
-                title: {
-                    text: 'kwh per cápita'
-                },
+                    title: {
+                        text: 'kwh per cápita'
+                    },
                 labels: {
                     formatter: function () {
                         return this.value;
                     }
                 }
-            },
-            legend: {
-                shadow: false
             },
             tooltip: {
-                shared: true
+                split: true,
+               
             },
             plotOptions: {
-                column: {
-                    grouping: false,
-                    shadow: false,
-                    borderWidth: 0
+                area: {
+                    stacking: 'normal',
+                    lineColor: '#666666',
+                    lineWidth: 1,
+                    marker: {
+                        lineWidth: 1,
+                        lineColor: '#666666'
+                    }
                 }
             },
                 series: series_datos_consumo
@@ -369,7 +367,7 @@ function charts2($http, $window, url) {
 
     Highcharts.chart('container5', {
         chart: {
-            type: 'area'
+            type: 'column'
         },
         title: {
             text: 'Líneas de ferrocarril por años'
@@ -378,45 +376,28 @@ function charts2($http, $window, url) {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
-            allowDecimals: false,
-            labels: {
-                formatter: function () {
-                    return this.value;
-                }
-            },
-            accessibility: {
-                rangeDescription: min(date) + " a " + max(date)
-            }
+            categories: units,
+            crosshair: true
         },
         yAxis: {
+            min: 0,
             title: {
                 text: 'km Totales'
-            },
-            labels: {
-                formatter: function () {
-                    return this.value;
-                }
             }
-        },
-        legend: {
-            shadow: false
+            
         },
         tooltip: {
-            pointFormat: '{series.name} - {point.y:,.0f}</b><br/>people in {point.x}'
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f}kg</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
         },
         plotOptions: {
-            area: {
-                pointStart: min(date),
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                        }
-                    }
-                }
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
             }
         },
         series:series_datos_trenes
@@ -424,45 +405,36 @@ function charts2($http, $window, url) {
 
     Highcharts.chart('container6', {
         chart: {
-            type: 'area'
+            type: 'column'
         },
         title: {
-            text: 'Transporte aéreo por años'
+            text: 'Transporte aéreo por años',
+            useHTML: true
         },
         subtitle: {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
-            allowDecimals: false,
-            labels: {
-                formatter: function () {
-                    return this.value;
-                }
-            },
-            accessibility: {
-                rangeDescription: min(date) + " a " + max(date)
-            }
+            categories: units,
+            crosshair: true
         },
         yAxis: {
+            min: 0,
             title: {
                 text: 'Salidas de avión registradas'
-            },
-            labels: {
-                formatter: function () {
-                    return this.value;
-                }
             }
         },
-        legend: {
-            shadow: false
-        },
         tooltip: {
-            shared: true
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f}kt</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
         },
         plotOptions: {
             column: {
-                grouping: false,
-                shadow: false,
+                pointPadding: 0.2,
                 borderWidth: 0
             }
         },
