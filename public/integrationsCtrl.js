@@ -216,7 +216,7 @@ function charts1($http, $window, url) {
     },
         function onReject(res) {
             console.log("Error recibiendo los datos: " + res.status);
-            $window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");
+            /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
         });
 }
 
@@ -472,7 +472,7 @@ function charts2($http, $window, url) {
     },
 function onReject(res) {
     console.log("Error recibiendo los datos: " + res.status);
-    $window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");
+    /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
 });
 }
 
