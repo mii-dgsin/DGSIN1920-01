@@ -4,7 +4,7 @@ var app = express();
 var bp = require('body-parser');
 var cors = require('cors');
 var request = require('request');
-const api_externa = "s://dgsin1920-02.herokuapp.com";
+const api_externa = "https://dgsin1920-02.herokuapp.com";
 
 var MongoClient = require('mongodb').MongoClient;
 const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db2?retryWrites=true&w=majority"; 
