@@ -1,15 +1,15 @@
-function charts1($http, $window, url) {
+function chartsA($http, $window, url) {
     var date = new Set();
     var pib = {};
     var desempleo = {};
     var deuda = {};
     var paises = new Set();
-    var graph_pib = {};
-    var graph_desempleo = {};
-    var graph_deuda = {};
-    var series_pib = [];
-    var series_desempleo = [];
-    var series_deuda = [];
+    var grafica_pib = {};
+    var grafica_desempleo = {};
+    var grafica_deuda = {};
+    var array_pib = [];
+    var array_desempleo = [];
+    var array_deuda = [];
     var units;
 
     $http.get(url).then(function onSuccess(res) {
@@ -51,7 +51,7 @@ function charts1($http, $window, url) {
                         array.push(pib[i][f])
                     }
                 }
-                graph_pib[i] = array;
+                grafica_pib[i] = array;
                 
             }
             
@@ -66,7 +66,7 @@ function charts1($http, $window, url) {
                         array.push(desempleo[i][f])
                     }
                 }
-                graph_desempleo[i] = array;
+                grafica_desempleo[i] = array;
             }
 
             for (var i in deuda) {
@@ -80,19 +80,19 @@ function charts1($http, $window, url) {
                         array.push(deuda[i][f])
                     }
                 }
-                graph_deuda[i] = array;
+                grafica_deuda[i] = array;
             }
             
-            for (var o in graph_pib) {
-                series_pib.push({ name: o, data: graph_pib[o] });
+            for (var o in grafica_pib) {
+                array_pib.push({ name: o, data: grafica_pib[o] });
             }
-            console.log("series_pib",series_pib);
-            for (var o in graph_desempleo) {
-                series_desempleo.push({ name: o, data: graph_desempleo[o] });
+            console.log("array_pib",array_pib);
+            for (var o in grafica_desempleo) {
+                array_desempleo.push({ name: o, data: grafica_desempleo[o] });
             }
 
-            for (var o in graph_deuda) {
-                series_deuda.push({ name: o, data: graph_deuda[o] });
+            for (var o in grafica_deuda) {
+                array_deuda.push({ name: o, data: grafica_deuda[o] });
             }
 
             console.log("Datos cargados y procesados para su visualización");
@@ -129,7 +129,7 @@ function charts1($http, $window, url) {
                         stacking: 'normal'
                     }
                 },
-                series: series_pib
+                series: array_pib
             });
 
             Highcharts.chart('container2', {
@@ -162,7 +162,7 @@ function charts1($http, $window, url) {
                         stacking: 'normal'
                     }
                 },
-                series: series_desempleo
+                series: array_desempleo
             });
 
             Highcharts.chart('container3', {
@@ -209,7 +209,7 @@ function charts1($http, $window, url) {
                         }
                     }
                 },
-                series: series_deuda
+                series: array_deuda
             });
         }
     },
@@ -219,18 +219,18 @@ function charts1($http, $window, url) {
         });
 }
 
-function charts2($http, $window, url) {
+function chartsB($http, $window, url) {
     var date = new Set();
-    var datos_consumo = {};
-    var datos_trenes = {};
-    var datos_aviones = {};
+    var consumo = {};
+    var trenes = {};
+    var aviones = {};
     var paises = new Set();
-    var graph_data_consumo = {};
-    var graph_data_trenes = {};
-    var graph_data_aviones = {};
-    var series_datos_consumo = [];
-    var series_datos_trenes = [];
-    var series_datos_aviones = [];
+    var grafica_consumo = {};
+    var grafica_trenes = {};
+    var grafica_aviones = {};
+    var array_consumo = [];
+    var array_trenes = [];
+    var array_aviones = [];
     var units;
 
     $http.get(url).then(function onSuccess(res) {
@@ -242,76 +242,76 @@ function charts2($http, $window, url) {
                 reg = datos_raw[i];
                 if (!paises.has(reg.country)) {
                     paises.add(reg.country);
-                    datos_consumo[reg.country] = {};
-                    datos_consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
-                    datos_trenes[reg.country] = {};
-                    datos_trenes[reg.country][reg.year] = reg["rail-lns"];
-                    datos_aviones[reg.country] = {};
-                    datos_aviones[reg.country][reg.year] = reg["air-trnspt"];
+                    consumo[reg.country] = {};
+                    consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
+                    trenes[reg.country] = {};
+                    trenes[reg.country][reg.year] = reg["rail-lns"];
+                    aviones[reg.country] = {};
+                    aviones[reg.country][reg.year] = reg["air-trnspt"];
                     date.add(reg.year);
                 }
                 else {
                     date.add(reg.year);
-                    datos_consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
-                    datos_trenes[reg.country][reg.year] = reg["rail-lns"];
-                    datos_aviones[reg.country][reg.year] = reg["air-trnspt"]
+                    consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
+                    trenes[reg.country][reg.year] = reg["rail-lns"];
+                    aviones[reg.country][reg.year] = reg["air-trnspt"]
                 }
             }
 
             units = Array.from(date);
 
-            for (var i in datos_consumo) {
+            for (var i in consumo) {
                 var array = [];
 
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!datos_consumo[i][f]) {
+                    if (!consumo[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_consumo[i][f])
+                        array.push(consumo[i][f])
                     }
                 }
-                graph_data_consumo[i] = array;
+                grafica_consumo[i] = array;
             }
-            for (var i in datos_trenes) {
+            for (var i in trenes) {
                 var array = [];
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!datos_trenes[i][f]) {
+                    if (!trenes[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_trenes[i][f])
+                        array.push(trenes[i][f])
                     }
                 }
-                graph_data_trenes[i] = array;
+                grafica_trenes[i] = array;
             }
 
-            for (var i in datos_aviones) {
+            for (var i in aviones) {
                 var array = [];
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!datos_aviones[i][f]) {
+                    if (!aviones[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(datos_aviones[i][f])
+                        array.push(aviones[i][f])
                     }
                 }
-                graph_data_aviones[i] = array;
+                grafica_aviones[i] = array;
             }
 
-            for (var o in graph_data_consumo) {
-                series_datos_consumo.push({ name: o, data: graph_data_consumo[o] });
+            for (var o in grafica_consumo) {
+                array_consumo.push({ name: o, data: grafica_consumo[o] });
             }
 
-            for (var o in graph_data_trenes) {
-                series_datos_trenes.push({ name: o, data: graph_data_trenes[o] });
+            for (var o in grafica_trenes) {
+                array_trenes.push({ name: o, data: grafica_trenes[o] });
             }
 
-            for (var o in graph_data_aviones) {
-                series_datos_aviones.push({ name: o, data: graph_data_aviones[o] });
+            for (var o in grafica_aviones) {
+                array_aviones.push({ name: o, data: grafica_aviones[o] });
             }
 
             console.log("Datos cargados y procesados para su visualización");
@@ -362,7 +362,7 @@ function charts2($http, $window, url) {
                     }
                 }
             },
-                series: series_datos_consumo
+                series: array_consumo
             });
 
     Highcharts.chart('container5', {
@@ -400,7 +400,7 @@ function charts2($http, $window, url) {
                 borderWidth: 0
             }
         },
-        series:series_datos_trenes
+        series:array_trenes
     });
 
     Highcharts.chart('container6', {
@@ -438,7 +438,7 @@ function charts2($http, $window, url) {
                 borderWidth: 0
             }
         },
-        series:series_datos_aviones
+        series:array_aviones
     });
 }
     },
@@ -455,11 +455,11 @@ angular.module("CollectionManagerApp")
         var url_apiB = "proxy01/api/v1/infrastructure-stats";
 
         function integrationA() {
-            charts1($http, $window, url_apiA);
+            chartsA($http, $window, url_apiA);
         }
 
         function integrationB() {
-            charts2($http, $window, url_apiB);
+            chartsB($http, $window, url_apiB);
         }
         console.log("Controlador para visualizar los datos de nuestra API de manera gráfica listo.");
         //get();
