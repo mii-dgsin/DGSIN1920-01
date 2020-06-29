@@ -86,7 +86,7 @@ function chartsA($http, $window, url) {
             for (var o in grafica_pib) {
                 array_pib.push({ name: o, data: grafica_pib[o] });
             }
-            console.log("array_pib",array_pib);
+    
             for (var o in grafica_desempleo) {
                 array_desempleo.push({ name: o, data: grafica_desempleo[o] });
             }
@@ -167,7 +167,8 @@ function chartsA($http, $window, url) {
 
             Highcharts.chart('container3', {
                 chart: {
-                    type: 'area'
+                    type: 'area',
+                    inverted: true
                 },
                 title: {
                     text: 'Deuda por años'
@@ -175,7 +176,24 @@ function chartsA($http, $window, url) {
                 subtitle: {
                     text: 'https://dgsin1920-02.herokuapp.com/api/v1/economic-stats'
                 },
-
+                accessibility: {
+                    keyboardNavigation: {
+                        seriesNavigation: {
+                            mode: 'serialize'
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -150,
+                    y: 100,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+                },
                 xAxis: {
                     categories: units,
                     tickmarkPlacement: 'on',
@@ -195,18 +213,9 @@ function chartsA($http, $window, url) {
                     }
                 },
                 
-                tooltip: {
-                    split: true
-                },
                 plotOptions: {
                     area: {
-                        stacking: 'normal',
-                        lineColor: '#666666',
-                        lineWidth: 1,
-                        marker: {
-                            lineWidth: 1,
-                            lineColor: '#666666'
-                        }
+                        fillOpacity: 0.5
                     }
                 },
                 series: array_deuda
@@ -221,9 +230,9 @@ function chartsA($http, $window, url) {
 
 function chartsB($http, $window, url) {
     var date = new Set();
-    var consumo = {};
-    var trenes = {};
-    var aviones = {};
+    var datos_consumo = {};
+    var datos_trenes = {};
+    var datos_aviones = {};
     var paises = new Set();
     var grafica_consumo = {};
     var grafica_trenes = {};
@@ -242,61 +251,61 @@ function chartsB($http, $window, url) {
                 reg = datos_raw[i];
                 if (!paises.has(reg.country)) {
                     paises.add(reg.country);
-                    consumo[reg.country] = {};
-                    consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
-                    trenes[reg.country] = {};
-                    trenes[reg.country][reg.year] = reg["rail-lns"];
-                    aviones[reg.country] = {};
-                    aviones[reg.country][reg.year] = reg["air-trnspt"];
+                    datos_consumo[reg.country] = {};
+                    datos_consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
+                    datos_trenes[reg.country] = {};
+                    datos_trenes[reg.country][reg.year] = reg["rail-lns"];
+                    datos_aviones[reg.country] = {};
+                    datos_aviones[reg.country][reg.year] = reg["air-trnspt"];
                     date.add(reg.year);
                 }
                 else {
                     date.add(reg.year);
-                    consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
-                    trenes[reg.country][reg.year] = reg["rail-lns"];
-                    aviones[reg.country][reg.year] = reg["air-trnspt"]
+                    datos_consumo[reg.country][reg.year] = reg["elect-pwr-cns"];
+                    datos_trenes[reg.country][reg.year] = reg["rail-lns"];
+                    datos_aviones[reg.country][reg.year] = reg["air-trnspt"]
                 }
             }
 
             units = Array.from(date);
 
-            for (var i in consumo) {
+            for (var i in datos_consumo) {
                 var array = [];
 
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!consumo[i][f]) {
+                    if (!datos_consumo[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(consumo[i][f])
+                        array.push(datos_consumo[i][f])
                     }
                 }
                 grafica_consumo[i] = array;
             }
-            for (var i in trenes) {
+            for (var i in datos_trenes) {
                 var array = [];
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!trenes[i][f]) {
+                    if (!datos_trenes[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(trenes[i][f])
+                        array.push(datos_trenes[i][f])
                     }
                 }
                 grafica_trenes[i] = array;
             }
 
-            for (var i in aviones) {
+            for (var i in datos_aviones) {
                 var array = [];
                 for (var j = 0; j < units.length; j++) {
                     var f = units[j];
-                    if (!aviones[i][f]) {
+                    if (!datos_aviones[i][f]) {
                         array.push(null);
                     }
                     else {
-                        array.push(aviones[i][f])
+                        array.push(datos_aviones[i][f])
                     }
                 }
                 grafica_aviones[i] = array;
@@ -321,7 +330,8 @@ function chartsB($http, $window, url) {
 
             Highcharts.chart('container4', {
                 chart: {
-                    type: 'area'
+                    type: 'area',
+                    inverted: true
                 },
                 title: {
                     text: 'Consumo por años'
@@ -329,7 +339,25 @@ function chartsB($http, $window, url) {
                 subtitle: {
                 text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
             },
-                xAxis: {
+            accessibility: {
+                keyboardNavigation: {
+                    seriesNavigation: {
+                        mode: 'serialize'
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -150,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+            },
+            xAxis: {
                     categories: units,
                     tickmarkPlacement: 'on',
                     title: {
@@ -347,19 +375,9 @@ function chartsB($http, $window, url) {
                     }
                 }
             },
-            tooltip: {
-                split: true,
-               
-            },
             plotOptions: {
                 area: {
-                    stacking: 'normal',
-                    lineColor: '#666666',
-                    lineWidth: 1,
-                    marker: {
-                        lineWidth: 1,
-                        lineColor: '#666666'
-                    }
+                    fillOpacity: 0.5
                 }
             },
                 series: array_consumo
@@ -367,8 +385,15 @@ function chartsB($http, $window, url) {
 
     Highcharts.chart('container5', {
         chart: {
-            type: 'column'
-        },
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                viewDistance: 25,
+                depth: 40
+        }
+    },
         title: {
             text: 'Líneas de ferrocarril por años'
         },
@@ -377,27 +402,30 @@ function chartsB($http, $window, url) {
         },
         xAxis: {
             categories: units,
-            crosshair: true
+            labels: {
+                skew3d: true,
+                style: {
+                    fontSize: '16px'
+                }
+            }
         },
         yAxis: {
+            allowDecimals: false,
             min: 0,
             title: {
-                text: 'km Totales'
+                text: 'km Totales',
+                skew3d: true
             }
-            
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f}kg</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
         },
+    
         plotOptions: {
             column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+                stacking: 'normal',
+                depth: 40
             }
         },
         series:array_trenes
@@ -405,7 +433,14 @@ function chartsB($http, $window, url) {
 
     Highcharts.chart('container6', {
         chart: {
-            type: 'column'
+            type: 'column',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                viewDistance: 25,
+                depth: 40
+            }
         },
         title: {
             text: 'Transporte aéreo por años',
@@ -416,28 +451,35 @@ function chartsB($http, $window, url) {
         },
         xAxis: {
             categories: units,
-            crosshair: true
+            crosshair: true,
+            labels: {
+                skew3d: true,
+                style: {
+                    fontSize: '16px'
+                }
+            }
+        
         },
         yAxis: {
+            allowDecimals: false,
             min: 0,
             title: {
-                text: 'Salidas de avión registradas'
+                text: 'Salidas de avión registradas',
+                skew3d: true
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f}kt</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
+            headerFormat: '<b>{point.key}</b><br>',
+            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
         },
+    
         plotOptions: {
             column: {
-                pointPadding: 0.2,
-                borderWidth: 0
+                stacking: 'normal',
+                depth: 40
             }
         },
+    
         series:array_aviones
     });
 }
