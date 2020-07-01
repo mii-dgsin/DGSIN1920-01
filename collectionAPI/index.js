@@ -1,5 +1,6 @@
 
 var bp = require("body-parser");
+
 // Get rid of _id when returning collection
 function formatCollection(collection) {
     return collection.map((collection) => {
@@ -10,53 +11,6 @@ function formatCollection(collection) {
 
 const BASE_API = "/api/v1";
 
-/*var initialCollection = [
-    {
-        "name": "Harvard University",
-        "country": "United States of America",
-        "teaching_rating": 99.7,
-        "industry_income_rating": 34.5,
-        "total_score": 96.1,
-        "year": 2011
-
-    },
-    {
-        "name": "California Institute of Technology",
-        "country": "United States of America",
-        "teaching_rating": 97.7,
-        "industry_income_rating": 83.7,
-        "total_score": 96,
-        "year": 2011
-
-    },
-    {
-        "name": "Imperial College London",
-        "country": "United Kingdom",
-        "teaching_rating": 89.2,
-        "industry_income_rating": 92.9,
-        "total_score": 90.6,
-        "year": 2011
-
-    },
-    {
-        "name": "University of Tokyo",
-        "country": "Japan",
-        "teaching_rating": 86.1,
-        "industry_income_rating": 76.6,
-        "total_score": 74.3,
-        "year": 2012
-
-    },
-    {
-        "name": "University of Granada",
-        "country": "Spain",
-        "teaching_rating": 24.3,
-        "industry_income_rating": 29.4,
-        "total_score": 72.3,
-        "year": 2016
-
-    }
-];*/
 
 module.exports.register = function (app, db) {
 
@@ -83,7 +37,7 @@ module.exports.register = function (app, db) {
 					var total_score = jsondb[i].total_score;
 					var year = jsondb[i].year;
                  
-                    var entrada = {
+                    var campos = {
                         "name": name,
                         "country": country,
                         "teaching_rating": teaching_rating,
@@ -93,7 +47,7 @@ module.exports.register = function (app, db) {
                        
                     }
 
-                    db.insert(entrada);
+                    db.insert(campos);
                 }
                 console.log("Insertion finished");
                 res.sendStatus(201);
@@ -133,7 +87,7 @@ module.exports.register = function (app, db) {
                 || !newCollection.industry_income_rating || !newCollection.total_score || !newCollection.year
             ) {
              
-                console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 400...");
+                console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 400..." + newCollection);
                 res.sendStatus(400); // unprocessable entity
             } else {
                 db.find({ "name": newCollection.name }).toArray((err, collection) => {
@@ -178,7 +132,7 @@ module.exports.register = function (app, db) {
 
     // PUT over a collection
     app.put(BASE_API + "/collection", (req, res) => {
-        console.warn("New PUT request to /collection, sending 405...");
+        console.warn("New PUT request to /collection, operation not allowed, sending 405...");
         res.sendStatus(405); // method not allowed
     });
 
@@ -196,7 +150,7 @@ module.exports.register = function (app, db) {
                     res.sendStatus(500); // internal server error
                 } else {
                     if (filteredCollection.length > 0) {
-                        var collection = formatCollection(filteredCollection)[0]; //since we expect to have exactly ONE collection with this name
+                        var collection = formatCollection(filteredCollection); //since we expect to have exactly ONE collection with this name
                         console.debug("Sending collection: " + JSON.stringify(collection, null, 2));
                         res.send(collection);
                     } else {
@@ -250,6 +204,10 @@ module.exports.register = function (app, db) {
         if (!name) {
             console.warn("New PUT request to /collection/:name without name, sending 400...");
             res.sendStatus(400); // bad request
+        } else if(name != req.body.name){
+            console.warn("The id of the URL is different from the body");
+            res.sendStatus(400);
+        
         } else if (!updatedCollection) {
             console.warn("New PUT request to /collection/ without collection, sending 400...");
             res.sendStatus(400); // bad request
@@ -258,7 +216,7 @@ module.exports.register = function (app, db) {
             if (!updatedCollection.name || !updatedCollection.country || !updatedCollection.teaching_rating
                 || !updatedCollection.industry_income_rating || !updatedCollection.total_score || !updatedCollection.year) {
                 console.warn("The collection " + JSON.stringify(updatedCollection, null, 2) + " is not well-formed, sending 422...");
-                res.sendStatus(422); // unprocessable entity
+                res.sendStatus(400); // unprocessable entity
             } else {
                 db.find({ "name": name }).toArray((err, collection) => {
                     if (err) {
