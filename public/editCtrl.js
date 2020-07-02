@@ -7,13 +7,13 @@ angular.module("CollectionManagerApp")
         var url_recurso = APIurl + "/" + collectionName
 
         function getCollection() {
-            $http.get(url_recurso).then(function onSuccess (response) {
+            $http.get(url_recurso).then(function  (response) {
                 if (response.status == 200 && response.data.length > 0) {
                 console.log("Collection to be updated: " + JSON.stringify(response.data, null, 2));
                 $scope.updatedCollection = response.data[0];
             }
         },
-            function onReject(response) {
+            function (response) {
                 if (response.status == 404) {
                     console.log("Error retrieving record, resource does not exist. Status code:" + response.status);
                     $window.alert("Error al recuperar el registro: el registro con nombre "+ collectionName +" no existe en la base de datos");
@@ -25,14 +25,14 @@ angular.module("CollectionManagerApp")
 
         $scope.updateCollection = function updateCollection() {
          
-            $http.put(url_recurso, $scope.updatedCollection).then(function onSuccess(response) {
+            $http.put(url_recurso, $scope.updatedCollection).then(function (response) {
                 if (response.status == 200) {
                     console.log("Updated registration with data:" + JSON.stringify($scope.updatedCollection, null, 2));
                     $window.alert("Registro actualizado correctamente");
                     $location.path("/list");
                 }
             },
-                function onReject(response) {
+                function (response) {
                     if (res.status == 400) {
                         console.log("Registry not updated correctly. Bodyless petition. Status code:" + response.status);
                         $window.alert("No se pudo actualizar el registro. La petición no contiene un cuerpo.");

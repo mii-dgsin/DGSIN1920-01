@@ -162,6 +162,32 @@ module.exports.register = function (app, db) {
         }
     });
 
+    // GET a specific country
+    app.get(BASE_API + "/collection/country/:country", (req, res) => {
+        var country = req.params.country;
+        if (!country) {
+            console.warn("New GET request to /collection/:country without country, sending 400...");
+            res.sendStatus(400); // bad request
+        } else {
+            console.info("New GET request to /collection/" + country);
+            db.find({ "country": country }).toArray((err, filteredCollection) => {
+                if (err) {
+                    console.error('Error getting data from DB');
+                    res.sendStatus(500); // internal server error
+                } else {
+                    if (filteredCollection.length > 0) {
+                        var collection = formatCollection(filteredCollection); //since we expect to have exactly ONE collection with this name
+                        console.debug("Sending collection: " + JSON.stringify(collection, null, 2));
+                        res.send(collection);
+                    } else {
+                        console.warn("There are not any collection with country " + country);
+                        res.sendStatus(404); // not found
+                    }
+                }
+            });
+        }
+    });
+
     // POST a specific resource
     app.post(BASE_API + "/collection/:name", (req, res) => {
         var name = req.params.name;

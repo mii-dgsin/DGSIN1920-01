@@ -5,21 +5,21 @@ angular.module("CollectionManagerApp")
         var APIurl = "/api/v1/collection";
         
         function getCollections () {
-            $http.get(APIurl).then(function onSuccess(response) {
+            $http.get(APIurl).then(function (response) {
                 if (response.status == 200 && response.data.length > 0) {
                 console.log("Collections received: " + JSON.stringify(response.data, null, 2));
                 $scope.collections = response.data;
             }
         },
 
-                function onReject(res) {
+                function (res) {
                     console.log("Error recibiendo los datos: " + res.status);
                     $window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");
                 });
         }
         $scope.deleteCollections = function deleteCollections() {
             
-            $http.delete(APIurl).then(function onSuccess (response) {
+            $http.delete(APIurl).then(function  (response) {
                 if (response.status == 204) {
                     console.log("DELETE all collections finished");
                     $window.alert("Todos los registros eliminados exitosamente");
@@ -29,7 +29,7 @@ angular.module("CollectionManagerApp")
 
                 }
             },
-            function onReject(response) {
+            function (response) {
                 if (response.status == 404) {
                     console.log("Error eliminando los registros: no hay registros que eliminar " + response.status);
                     $window.alert("No se puede eliminar ningún registro ya que no hay ninguno en la base de datos");
@@ -42,7 +42,7 @@ angular.module("CollectionManagerApp")
         }
         $scope.deleteCollection = function deleteCollection(CollectionName) {
             
-            $http.delete(APIurl+"/"+CollectionName).then(function onSuccess (response) {
+            $http.delete(APIurl+"/"+CollectionName).then(function  (response) {
                 if (response.status == 204) {
                     console.log("Registro correspondiente a la universidad " + CollectionName);
                     $window.alert("Registro con nombre " + CollectionName +  " eliminado exitosamente");
@@ -50,7 +50,7 @@ angular.module("CollectionManagerApp")
                 }
 
             },
-                function onReject(response) {
+                function (response) {
                     if (response.status == 404) {
                         console.log("Error eliminando registro con nombre " + CollectionName + ": no hay registro que eliminar; " + response.status);
                         $window.alert("Ha ocurrido un problema eliminando los registros: no hay ningún registro con nombre " + CollectionName);
@@ -64,14 +64,14 @@ angular.module("CollectionManagerApp")
 
         $scope.addCollection = function addCollection() {
             
-            $http.post(APIurl, $scope.newCollection).then(function onSuccess(response) {
+            $http.post(APIurl, $scope.newCollection).then(function (response) {
                 if (response.status == 201) {
                     console.log("POST finished");
                     $window.alert("Registro añadido satisfactoriamente");
                     getCollections();
                 }
             },
-            function onReject(res) {
+            function (res) {
 
                 if (res.status == 409) {
 

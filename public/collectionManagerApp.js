@@ -19,6 +19,12 @@ angular.module("CollectionManagerApp", ["ngRoute"]).config(function ($routeProvi
             controller: "EditCtrl"
         }
     )
+        .when("/collection/country/:country",
+    {
+            templateUrl: "country.html",
+            controller: "CountryCtrl"
+        }
+    )
 		.when("/integrations",
             {
                 templateUrl: "integrations.html",

@@ -21,12 +21,13 @@
             <td><button class="btn btn-primary"   ng-click="addCollection()">Add</button></td>
         </tr>
         <tr ng-repeat="collectionAux in collections">
-            <td><a href="/#!/collection/{{collectionAux.name}}">{{ collectionAux.name }}</a></td>
-            <td>{{ collectionAux.country }}</td>
-            <td>{{ collectionAux.teaching_rating }}</td>
-            <td>{{ collectionAux.industry_income_rating }}</td>
-            <td>{{ collectionAux.total_score }}</td>
-            <td>{{ collectionAux.year }}</td>
+            <td><a href="/#!/collection/{{collectionAux.name}}">{{ collectionAux.name }} </a></td>
+            <td><a href="/#!/collection/country/{{collectionAux.country}}">{{ collectionAux.country }} </a></td>
+            
+            <td>{{ collectionAux.teaching_rating }} </td>
+            <td>{{ collectionAux.industry_income_rating }} </td>
+            <td>{{ collectionAux.total_score }} </td>
+            <td>{{ collectionAux.year }} </td>
             <td><button class="btn btn-danger"    ng-click="deleteCollection(collectionAux.name)">Delete</button></td>
         </tr>
         <tr>

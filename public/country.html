@@ -1,0 +1,50 @@
+
+<h1>List of Universities</h1>
+<table class="ml-5 table-striped">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>&nbsp;</td>
+            <td>Country</td>
+            <td>&nbsp;</td>
+            <td>Teaching rating</td>
+            <td>&nbsp;</td>
+            <td>Industry income rating</td>
+            <td>&nbsp;</td>
+            <td>Total score</td>
+            <td>&nbsp;</td>
+            <td>Year</td>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr ng-repeat="c in countries">
+            <td><a href="/#!/collection/{{c.name}}">{{ c.name }} </a></td>
+            <td>&nbsp;</td>
+            <td>{{ c.country }} </td>
+            <td>&nbsp;</td>
+            <td>{{ c.teaching_rating }} </td>
+            <td>&nbsp;</td>
+            <td>{{ c.industry_income_rating }} </td>
+            <td>&nbsp;</td>
+            <td>{{ c.total_score }} </td>
+            <td>&nbsp;</td>
+            <td>{{ c.year }} </td>
+            
+        </tr>
+    </tr>
+        <tr> 
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table>

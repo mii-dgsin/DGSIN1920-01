@@ -12,7 +12,7 @@ function chartsA($http, $window, url) {
     var array_deuda = [];
     var units;
 
-    $http.get(url).then(function onSuccess(res) {
+    $http.get(url).then(function (res) {
         if (res.status == 200 && res.data.length > 0) {
             console.log("Registros recibidos: " + JSON.stringify(res.data, null, 2));
             var datos_raw = res.data;
@@ -112,13 +112,15 @@ function chartsA($http, $window, url) {
                 },
 
                 xAxis: {
+                    allowDecimals: false,
                     categories: units,
                     crosshair: true
                 },
                 yAxis: {
+                    allowDecimals: false,
                     min: 0,
                     title: {
-                        text: 'euros (1T = 10 elevado a 6)'
+                        text: 'euros (1T = 10 elevado a 12 = 1 billón de euros)'
                     }
                 },
                 legend: {
@@ -145,10 +147,12 @@ function chartsA($http, $window, url) {
                 },
 
                 xAxis: {
+                    allowDecimals: false,
                     categories: units,
                     crosshair: true
                 },
                 yAxis: {
+                    allowDecimals: false,
                     min: 0,
                     title: {
                         text: '% Desempleo'
@@ -195,6 +199,7 @@ function chartsA($http, $window, url) {
                         Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
                 },
                 xAxis: {
+                    allowDecimals: false,
                     categories: units,
                     tickmarkPlacement: 'on',
                     title: {
@@ -203,6 +208,7 @@ function chartsA($http, $window, url) {
                 },
                     
                 yAxis: {
+                    allowDecimals: false,
                     title: {
                         text: 'miles de millones de euros'
                     },
@@ -222,7 +228,7 @@ function chartsA($http, $window, url) {
             });
         }
     },
-        function onReject(res) {
+        function (res) {
             console.log("Error recibiendo los datos: " + res.status);
             /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
         });
@@ -242,7 +248,7 @@ function chartsB($http, $window, url) {
     var array_aviones = [];
     var units;
 
-    $http.get(url).then(function onSuccess(res) {
+    $http.get(url).then(function (res) {
         if (res.status == 200 && res.data.length > 0) {
             console.log("Registros recibidos: " + JSON.stringify(res.data, null, 2));
             var datos_raw = res.data;
@@ -358,6 +364,7 @@ function chartsB($http, $window, url) {
                     Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
             },
             xAxis: {
+                    allowDecimals: false,
                     categories: units,
                     tickmarkPlacement: 'on',
                     title: {
@@ -366,6 +373,7 @@ function chartsB($http, $window, url) {
                 
                 },
                 yAxis: {
+                    allowDecimals: false,
                     title: {
                         text: 'kwh per cápita'
                     },
@@ -401,6 +409,7 @@ function chartsB($http, $window, url) {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
+            allowDecimals: false,
             categories: units,
             labels: {
                 skew3d: true,
@@ -417,10 +426,7 @@ function chartsB($http, $window, url) {
                 skew3d: true
             }
         },
-        tooltip: {
-            headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
-        },
+        
     
         plotOptions: {
             column: {
@@ -450,6 +456,7 @@ function chartsB($http, $window, url) {
             text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
         },
         xAxis: {
+            allowDecimals: false,
             categories: units,
             crosshair: true,
             labels: {
@@ -468,10 +475,6 @@ function chartsB($http, $window, url) {
                 skew3d: true
             }
         },
-        tooltip: {
-            headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
-        },
     
         plotOptions: {
             column: {
@@ -484,7 +487,7 @@ function chartsB($http, $window, url) {
     });
 }
     },
-function onReject(res) {
+function (res) {
     console.log("Error recibiendo los datos: " + res.status);
     /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
 });
@@ -496,15 +499,15 @@ angular.module("CollectionManagerApp")
         var url_apiA = "proxy01/api/v1/economic-stats";
         var url_apiB = "proxy01/api/v1/infrastructure-stats";
 
-        function integrationA() {
+        function integracionApiA() {
             chartsA($http, $window, url_apiA);
         }
 
-        function integrationB() {
+        function integrationApiB() {
             chartsB($http, $window, url_apiB);
         }
         console.log("Controlador para visualizar los datos de nuestra API de manera gráfica listo.");
         //get();
-        integrationA();
-        integrationB();
+        integracionApiA();
+        integrationApiB();
     }]);
