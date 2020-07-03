@@ -52,9 +52,9 @@ function chartsA($http, $window, url) {
                     }
                 }
                 grafica_pib[i] = array;
-                
+
             }
-            
+
             for (var i in desempleo) {
                 var array = [];
                 for (var j = 0; j < units.length; j++) {
@@ -82,11 +82,11 @@ function chartsA($http, $window, url) {
                 }
                 grafica_deuda[i] = array;
             }
-            
+
             for (var o in grafica_pib) {
                 array_pib.push({ name: o, data: grafica_pib[o] });
             }
-    
+
             for (var o in grafica_desempleo) {
                 array_desempleo.push({ name: o, data: grafica_desempleo[o] });
             }
@@ -206,7 +206,7 @@ function chartsA($http, $window, url) {
                         enabled: false
                     }
                 },
-                    
+
                 yAxis: {
                     allowDecimals: false,
                     title: {
@@ -218,7 +218,7 @@ function chartsA($http, $window, url) {
                         }
                     }
                 },
-                
+
                 plotOptions: {
                     area: {
                         fillOpacity: 0.5
@@ -230,7 +230,7 @@ function chartsA($http, $window, url) {
     },
         function (res) {
             console.log("Error recibiendo los datos: " + res.status);
-            /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
+            $window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");
         });
 }
 
@@ -343,154 +343,153 @@ function chartsB($http, $window, url) {
                     text: 'Consumo por años'
                 },
                 subtitle: {
-                text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
-            },
-            accessibility: {
-                keyboardNavigation: {
-                    seriesNavigation: {
-                        mode: 'serialize'
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
+                },
+                accessibility: {
+                    keyboardNavigation: {
+                        seriesNavigation: {
+                            mode: 'serialize'
+                        }
                     }
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -150,
-                y: 100,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
-            },
-            xAxis: {
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -150,
+                    y: 100,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+                },
+                xAxis: {
                     allowDecimals: false,
                     categories: units,
                     tickmarkPlacement: 'on',
                     title: {
                         enabled: false
                     }
-                
+
                 },
                 yAxis: {
                     allowDecimals: false,
                     title: {
                         text: 'kwh per cápita'
                     },
-                labels: {
-                    formatter: function () {
-                        return this.value;
+                    labels: {
+                        formatter: function () {
+                            return this.value;
+                        }
                     }
-                }
-            },
-            plotOptions: {
-                area: {
-                    fillOpacity: 0.5
-                }
-            },
+                },
+                plotOptions: {
+                    area: {
+                        fillOpacity: 0.5
+                    }
+                },
                 series: array_consumo
             });
 
-    Highcharts.chart('container5', {
-        chart: {
-            type: 'column',
-            options3d: {
-                enabled: true,
-                alpha: 15,
-                beta: 15,
-                viewDistance: 25,
-                depth: 40
+            Highcharts.chart('container5', {
+                chart: {
+                    type: 'column',
+                    options3d: {
+                        enabled: true,
+                        alpha: 15,
+                        beta: 15,
+                        viewDistance: 25,
+                        depth: 40
+                    }
+                },
+                title: {
+                    text: 'Líneas de ferrocarril por años'
+                },
+                subtitle: {
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
+                },
+                xAxis: {
+                    allowDecimals: false,
+                    categories: units,
+                    labels: {
+                        skew3d: true,
+                        style: {
+                            fontSize: '16px'
+                        }
+                    }
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                        text: 'km Totales',
+                        skew3d: true
+                    }
+                },
+
+
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        depth: 40
+                    }
+                },
+                series: array_trenes
+            });
+
+            Highcharts.chart('container6', {
+                chart: {
+                    type: 'column',
+                    options3d: {
+                        enabled: true,
+                        alpha: 15,
+                        beta: 15,
+                        viewDistance: 25,
+                        depth: 40
+                    }
+                },
+                title: {
+                    text: 'Transporte aéreo por años',
+                    useHTML: true
+                },
+                subtitle: {
+                    text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
+                },
+                xAxis: {
+                    allowDecimals: false,
+                    categories: units,
+                    crosshair: true,
+                    labels: {
+                        skew3d: true,
+                        style: {
+                            fontSize: '16px'
+                        }
+                    }
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    min: 0,
+                    title: {
+                        text: 'Salidas de avión registradas',
+                        skew3d: true
+                    }
+                },
+
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        depth: 40
+                    }
+                },
+
+                series: array_aviones
+            });
         }
     },
-        title: {
-            text: 'Líneas de ferrocarril por años'
-        },
-        subtitle: {
-            text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
-        },
-        xAxis: {
-            allowDecimals: false,
-            categories: units,
-            labels: {
-                skew3d: true,
-                style: {
-                    fontSize: '16px'
-                }
-            }
-        },
-        yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-                text: 'km Totales',
-                skew3d: true
-            }
-        },
-        
-    
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                depth: 40
-            }
-        },
-        series:array_trenes
-    });
-
-    Highcharts.chart('container6', {
-        chart: {
-            type: 'column',
-            options3d: {
-                enabled: true,
-                alpha: 15,
-                beta: 15,
-                viewDistance: 25,
-                depth: 40
-            }
-        },
-        title: {
-            text: 'Transporte aéreo por años',
-            useHTML: true
-        },
-        subtitle: {
-            text: 'https://dgsin1920-02.herokuapp.com/api/v1/infrastructure-stats'
-        },
-        xAxis: {
-            allowDecimals: false,
-            categories: units,
-            crosshair: true,
-            labels: {
-                skew3d: true,
-                style: {
-                    fontSize: '16px'
-                }
-            }
-        
-        },
-        yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-                text: 'Salidas de avión registradas',
-                skew3d: true
-            }
-        },
-    
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                depth: 40
-            }
-        },
-    
-        series:array_aviones
-    });
-}
-    },
-function (res) {
-    console.log("Error recibiendo los datos: " + res.status);
-    /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
-});
+        function (res) {
+            console.log("Error recibiendo los datos: " + res.status);
+            /*$window.alert("Ha ocurrido un error al recibir los datos. Vuelva a intentarlo de nuevo");*/
+        });
 }
 
 

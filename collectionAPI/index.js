@@ -15,12 +15,12 @@ const BASE_API = "/api/v1";
 module.exports.register = function (app, db) {
 
     // loadInitialData 
-   app.use(bp.json());
+    app.use(bp.json());
 
-    app.get(BASE_API + "/collection/docs",(req,res)=>{
+    app.get(BASE_API + "/collection/docs", (req, res) => {
         res.redirect("https://documenter.getpostman.com/view/10637735/Szzegfqy");
-                  
-     });
+
+    });
 
     app.get(BASE_API + "/collection/loadInitialData", (req, res) => {
 
@@ -29,22 +29,22 @@ module.exports.register = function (app, db) {
                 console.info("Empty database, adding initial values");
                 var jsondb = require("../bd/bd.json");
                 for (var i = 0; i < jsondb.length; i++) {
-                    
+
                     var name = jsondb[i].name;
                     var country = jsondb[i].country;
                     var teaching_rating = jsondb[i].teaching_rating;
                     var industry_income_rating = jsondb[i].industry_income_rating;
-					var total_score = jsondb[i].total_score;
-					var year = jsondb[i].year;
-                 
+                    var total_score = jsondb[i].total_score;
+                    var year = jsondb[i].year;
+
                     var campos = {
                         "name": name,
                         "country": country,
                         "teaching_rating": teaching_rating,
                         "industry_income_rating": industry_income_rating,
-						"total_score": total_score,
-						"year": year,
-                       
+                        "total_score": total_score,
+                        "year": year,
+
                     }
 
                     db.insert(campos);
@@ -78,7 +78,7 @@ module.exports.register = function (app, db) {
     app.post(BASE_API + "/collection", (req, res) => {
         var newCollection = req.body;
         if (!newCollection) {
- 
+
             console.warn("New POST request to /collection/ without collection, sending 400...");
             res.sendStatus(400); //bad request
         } else {
@@ -86,7 +86,7 @@ module.exports.register = function (app, db) {
             if (!newCollection.name || !newCollection.country || !newCollection.teaching_rating
                 || !newCollection.industry_income_rating || !newCollection.total_score || !newCollection.year
             ) {
-             
+
                 console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " is not well-formed, sending 400..." + newCollection);
                 res.sendStatus(400); // unprocessable entity
             } else {
@@ -96,10 +96,10 @@ module.exports.register = function (app, db) {
                         res.sendStatus(500);
                     } else {
                         if (collection.length > 0) {
-                           
+
                             console.warn("The collection " + JSON.stringify(newCollection, null, 2) + " already exists, sending 409...");
                             res.sendStatus(409); // conflict
-                        } else {         
+                        } else {
                             console.debug("Adding collection " + JSON.stringify(newCollection, null, 2));
                             db.insert(newCollection);
                             res.sendStatus(201); // created
@@ -192,7 +192,7 @@ module.exports.register = function (app, db) {
     app.post(BASE_API + "/collection/:name", (req, res) => {
         var name = req.params.name;
         console.warn("New POST request to /collection/" + name + ", sending 405...");
-            res.sendStatus(405); // method not allowed
+        res.sendStatus(405); // method not allowed
     });
 
     // DELETE a specific resource
@@ -211,7 +211,7 @@ module.exports.register = function (app, db) {
                     var numRemoved = result.result.n;
                     console.debug("Collection removed: " + numRemoved);
                     if (numRemoved === 1) {
-                        
+
                         console.debug("The collection with name " + name + " has been succesfully deleted, sending 204...");
                         res.sendStatus(204); // no content
                     } else {
@@ -230,10 +230,10 @@ module.exports.register = function (app, db) {
         if (!name) {
             console.warn("New PUT request to /collection/:name without name, sending 400...");
             res.sendStatus(400); // bad request
-        } else if(name != req.body.name){
+        } else if (name != req.body.name) {
             console.warn("The id of the URL is different from the body");
             res.sendStatus(400);
-        
+
         } else if (!updatedCollection) {
             console.warn("New PUT request to /collection/ without collection, sending 400...");
             res.sendStatus(400); // bad request

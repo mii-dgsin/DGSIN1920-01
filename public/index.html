@@ -1,67 +1,69 @@
 <html ng-app="CollectionManagerApp">
-    <head>
-        <title>Universities</title>
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-        <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
- 
+<head>
+    <title>Universities</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"> </script>-->
-        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-        <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
-        <script type="text/javascript" src="collectionManagerApp.js"></script>
-        <script type="text/javascript" src="listCtrl.js"></script>
-        <script type="text/javascript" src="editCtrl.js"></script>
-        <script type="text/javascript" src="countryCtrl.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
 
-        <script type="text/javascript" src="analyticsCtrl.js"></script>
-		<script type="text/javascript" src="integrationsCtrl.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="collectionManagerApp.js"></script>
+    <script type="text/javascript" src="listCtrl.js"></script>
+    <script type="text/javascript" src="editCtrl.js"></script>
+    <script type="text/javascript" src="countryCtrl.js"></script>
+    <script type="text/javascript" src="analyticsCtrl.js"></script>
+    <script type="text/javascript" src="integrationsCtrl.js"></script>
 
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/series-label.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <script src="https://code.highcharts.com/modules/export-data.js"></script>
-        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-        <script src="https://code.highcharts.com/modules/variwide.js"></script>
-        
-      
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/variwide.js"></script>
 
-       
-    </head>
 
-   
 
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="pt-3 pl-3">
-                    <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/';">Init</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/list';">My REST API</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/analytics';">My analytics</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/integrations';">API integrations</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn  btn-outline-primary" onclick="location.href = '/api/v1/collection/loadInitialData';">LoadInitialData</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn btn-outline-primary" onclick="location.href = '/#!/about';">About</button>
-                </div>
-                <div class="pt-3 pl-3">
-                    <button class="btn btn btn-outline-primary" onclick="location.href = '/api/v1/collection/docs';">POSTMAN docs</button>
-                </div>
+
+</head>
+
+
+
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="pt-3 pl-3">
+                <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/';">Init</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/list';">My REST API</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/analytics';">My
+                    analytics</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn  btn-outline-primary" onclick="location.href = '/#!/integrations';">API
+                    integrations</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn  btn-outline-primary"
+                    onclick="location.href = '/api/v1/collection/loadInitialData';">LoadInitialData</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn btn-outline-primary" onclick="location.href = '/#!/about';">About</button>
+            </div>
+            <div class="pt-3 pl-3">
+                <button class="btn btn btn-outline-primary" onclick="location.href = '/api/v1/collection/docs';">POSTMAN
+                    docs</button>
             </div>
         </div>
-    </nav>
-    <body>
-        <div ng-view></div>
-    </body>
+    </div>
+</nav>
+
+<body>
+    <div ng-view></div>
+</body>
+
 </html>

@@ -1,14 +1,13 @@
 var express = require("express");
 var path = require('path');
 var app = express();
-var bp = require('body-parser');
 var cors = require('cors');
 var request = require('request');
 const api_externa = "https://dgsin1920-02.herokuapp.com";
 
 var MongoClient = require('mongodb').MongoClient;
-const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db2?retryWrites=true&w=majority"; 
-             
+const mdbURL = "mongodb+srv://admin:Jose1973@dgsin1920-01-knvtu.mongodb.net/dgsin-01-db2?retryWrites=true&w=majority";
+
 var db;
 var collectionAPI = require("./collectionAPI");
 
@@ -31,11 +30,11 @@ MongoClient.connect(mdbURL, (err, client) => {
                 db.insert(initialCollection);
             } else {
                 console.info("Connected to the DB with " + collection.length + " collection");
-				collectionAPI.register(app, db);
+                collectionAPI.register(app, db);
 
             }
         });
-	}
+    }
 });
 
 
@@ -56,12 +55,5 @@ app.listen(process.env.PORT || 8080, () => {
     console.log("Servidor listo");
 }).on("error", (e) => {
     console.error("Ha ocurrido un problema");
-});
+}); 
 
-/*const BASE_API_PATH = "/api/v1";
-// GET a collection for widget visualization 
-app.get(BASE_API_PATH + "/data", function (req, res){
-	console.log("INFO: New GET request to /data");
- 
-    res.send([2, 3, 4, 1, 2, 7, 13, 8, 4, 29, 1]);
-});*/

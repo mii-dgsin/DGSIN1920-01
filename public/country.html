@@ -1,4 +1,3 @@
-
 <h1>List of Universities</h1>
 <table class="ml-5 table-striped">
     <thead>
@@ -17,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        
+
         <tr ng-repeat="c in countries">
             <td><a href="/#!/collection/{{c.name}}">{{ c.name }} </a></td>
             <td>&nbsp;</td>
@@ -30,10 +29,10 @@
             <td>{{ c.total_score }} </td>
             <td>&nbsp;</td>
             <td>{{ c.year }} </td>
-            
+
+            <td><button class="btn btn-danger" ng-click="deleteCountry(c.name)">Delete</button></td>
         </tr>
-    </tr>
-        <tr> 
+        <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -45,6 +44,9 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+
         </tr>
+
     </tbody>
 </table>
